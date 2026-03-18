@@ -1,3 +1,5 @@
+import { collection, addDoc, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
 export class ForumController {
     constructor(app) {
         this.app = app;
@@ -24,7 +26,7 @@ export class ForumController {
 
         headerActions.innerHTML = '';
 
-        this.unsubscribeTopics = await this.db.subscribeToForumTopics((topics) => {
+        this.unsubscribeTopics = await this.db.subscribeToForumTopics(async (topics) => {
             const listContainer = document.getElementById('topics-container');
             if (!listContainer) return; // View may have changed
 
@@ -32,6 +34,10 @@ export class ForumController {
                 listContainer.innerHTML = `<p style="text-align:center; padding:2rem; color:var(--text-muted)">No hay temas creados. ¡Sé el primero en iniciar una discusión!</p>`;
                 return;
             }
+
+            const users = await this.app.db.getAllUsers();
+            const userMap = {};
+            users.forEach(u => userMap[u.id] = u);
 
             // Using inline styles mimicking styles.css patterns for robustness
             let html = `
@@ -49,6 +55,13 @@ export class ForumController {
 
             topics.forEach(t => {
                 const date = t.lastActivity ? new Date(t.lastActivity).toLocaleString() : new Date(t.createdAt).toLocaleString();
+                const author = userMap[t.authorId] || {};
+                const authorName = author.name || author.email || 'Anónimo';
+                const authorRole = author.role || 'usuario';
+                const avatarHtml = author.avatarBase64 
+                    ? `<img src="${author.avatarBase64}" style="width:28px; height:28px; border-radius:50%; object-fit:cover; margin-right:8px; vertical-align:middle;">`
+                    : `<div style="width:28px; height:28px; border-radius:50%; background:var(--primary); color:white; display:inline-flex; align-items:center; justify-content:center; margin-right:8px; font-size:0.8rem; font-weight:bold; vertical-align:middle;">${authorName.charAt(0).toUpperCase()}</div>`;
+
                 html += `
                     <tr style="border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.2s;" onmouseover="this.style.backgroundColor='#f8fafc'" onmouseout="this.style.backgroundColor='transparent'" onclick="app.forumController.openTopic('${t.id}')">
                         <td style="padding:1rem;">
@@ -56,8 +69,13 @@ export class ForumController {
                             <div style="font-size:0.85rem; color:var(--text-muted); margin-top:0.35rem;">${t.description.substring(0, 100)}${t.description.length > 100 ? '...' : ''}</div>
                         </td>
                         <td style="padding:1rem; font-size:0.9rem;">
-                            <div style="font-weight:500;">${t.authorName}</div>
-                            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:capitalize;">${t.authorRole}</div>
+                            <div style="display:flex; align-items:center;">
+                                ${avatarHtml}
+                                <div>
+                                    <div style="font-weight:500;">${authorName}</div>
+                                    <div style="font-size:0.75rem; color:var(--text-muted); text-transform:capitalize;">${authorRole}</div>
+                                </div>
+                            </div>
                         </td>
                         <td style="padding:1rem; text-align:center;">
                             <span class="status-badge status-assigned" style="background:#e0f2fe; color:#0284c7;">${t.replyCount || 0}</span>
@@ -90,6 +108,16 @@ export class ForumController {
             return;
         }
 
+        const users = await this.app.db.getAllUsers();
+        let topicAuthor = users.find(u => u.id === topic.authorId) || {};
+        const authorName = topicAuthor.name || topicAuthor.email || 'Anónimo';
+        const authorRole = topicAuthor.role || 'usuario';
+        
+        let authorAvatarHtml = `<span class="avatar" style="width:24px; height:24px; margin-right:0.5rem; font-size:0.7rem; display:inline-flex; align-items:center; justify-content:center; background:var(--primary); color:white; border-radius:50%;">${authorName.charAt(0).toUpperCase()}</span>`;
+        if (topicAuthor.avatarBase64) {
+            authorAvatarHtml = `<img src="${topicAuthor.avatarBase64}" class="avatar" style="width:24px; height:24px; margin-right:0.5rem; object-fit:cover; border-radius:50%;">`;
+        }
+
         // Action to go back
         headerActions.innerHTML = `<button class="btn btn-outline" onclick="app.navigate('forum-list')" style="display:flex; align-items:center; gap:0.5rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Volver</button>`;
 
@@ -100,9 +128,9 @@ export class ForumController {
                 <h3 style="margin-bottom:1rem; color:var(--text-main); font-size:1.6rem;">${topic.title}</h3>
                 <div style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1.5rem; display:flex; gap:1.5rem; align-items:center; border-bottom:1px solid var(--border); padding-bottom:1rem;">
                     <span style="display:flex; align-items:center;">
-                        <span class="avatar" style="width:24px; height:24px; margin-right:0.5rem; font-size:0.7rem;">${topic.authorName.charAt(0).toUpperCase()}</span>
-                        <span style="font-weight:500; color:var(--text-main);">${topic.authorName}</span>
-                        <span style="margin-left:0.5rem; background:#f1f5f9; padding:0.1rem 0.4rem; border-radius:1rem; font-size:0.75rem; text-transform:capitalize;">${topic.authorRole}</span>
+                        ${authorAvatarHtml}
+                        <span style="font-weight:500; color:var(--text-main);">${authorName}</span>
+                        <span style="margin-left:0.5rem; background:#f1f5f9; padding:0.1rem 0.4rem; border-radius:1rem; font-size:0.75rem; text-transform:capitalize;">${authorRole}</span>
                     </span>
                     <span style="display:flex; align-items:center;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 
@@ -131,7 +159,7 @@ export class ForumController {
 
         container.innerHTML = html;
 
-        this.unsubscribeMessages = await this.db.subscribeToForumMessages(topicId, (messages) => {
+        this.unsubscribeMessages = await this.db.subscribeToForumMessages(topicId, async (messages) => {
             const msgsContainer = document.getElementById('messages-container');
             if (!msgsContainer) return;
 
@@ -140,20 +168,31 @@ export class ForumController {
                 return;
             }
 
+            const users = await this.app.db.getAllUsers();
+            const userMap = {};
+            users.forEach(u => userMap[u.id] = u);
+
             let msgsHtml = '';
             messages.forEach(m => {
                 const date = new Date(m.createdAt).toLocaleString();
                 const isMyMessage = m.authorId === this.app.currentUser.id;
-                const authorInitial = m.authorName ? m.authorName.charAt(0).toUpperCase() : '?';
+                const mAuthor = userMap[m.authorId] || {};
+                const mAuthorName = mAuthor.name || mAuthor.email || 'Anónimo';
+                const mAuthorRole = mAuthor.role || 'usuario';
                 
+                let mAvatarHtml = `<div class="avatar" style="width:36px; height:36px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:var(--primary); color:white; font-weight:bold; border-radius:50%;">${mAuthorName.charAt(0).toUpperCase()}</div>`;
+                if (mAuthor.avatarBase64) {
+                    mAvatarHtml = `<img src="${mAuthor.avatarBase64}" class="avatar" style="width:36px; height:36px; flex-shrink:0; object-fit:cover; border-radius:50%;">`;
+                }
+
                 msgsHtml += `
                     <div style="background:white; padding:1.25rem; border-radius:0.5rem; border:1px solid ${isMyMessage ? 'var(--primary)' : 'var(--border)'}; display:flex; gap:1rem;">
-                        <div class="avatar" style="width:36px; height:36px; flex-shrink:0;">${authorInitial}</div>
+                        ${mAvatarHtml}
                         <div style="flex:1;">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
                                 <div>
-                                    <span style="font-weight:600; font-size:0.95rem; color:var(--text-main);">${m.authorName}</span> 
-                                    <span style="font-size:0.75rem; background:#f1f5f9; padding:0.1rem 0.4rem; border-radius:1rem; margin-left:0.5rem; text-transform:capitalize;">${m.authorRole}</span>
+                                    <span style="font-weight:600; font-size:0.95rem; color:var(--text-main);">${mAuthorName}</span> 
+                                    <span style="font-size:0.75rem; background:#f1f5f9; padding:0.1rem 0.4rem; border-radius:1rem; margin-left:0.5rem; text-transform:capitalize;">${mAuthorRole}</span>
                                 </div>
                                 <span style="font-size:0.8rem; color:var(--text-muted)">${date}</span>
                             </div>
@@ -174,13 +213,26 @@ export class ForumController {
         input.disabled = true;
         
         try {
-            await this.db.createForumMessage({
+            const firestoreDb = this.db.db;
+            const messagesRef = collection(firestoreDb, 'forum_messages');
+            
+            await addDoc(messagesRef, {
                 topicId: topicId,
                 authorId: this.app.currentUser.id || 'unknown',
-                authorName: this.app.currentUser.name || this.app.currentUser.email || 'Anónimo',
-                authorRole: this.app.currentRole || 'usuario',
-                content: content
+                content: content,
+                createdAt: new Date().toISOString()
             });
+
+            const topicRef = doc(firestoreDb, 'forum_topics', topicId);
+            const topicSnap = await getDoc(topicRef);
+            if (topicSnap.exists()) {
+                const currentCount = topicSnap.data().replyCount || 0;
+                await updateDoc(topicRef, {
+                    replyCount: currentCount + 1,
+                    lastActivity: new Date().toISOString()
+                });
+            }
+
             input.value = '';
         } catch (e) {
             console.error("Error completo en postReply:", e);
@@ -235,9 +287,7 @@ export class ForumController {
             await this.db.createForumTopic({
                 title: title,
                 description: content,
-                authorId: this.app.currentUser.id || 'unknown',
-                authorName: this.app.currentUser.name || this.app.currentUser.email || 'Anónimo',
-                authorRole: this.app.currentRole || 'usuario'
+                authorId: this.app.currentUser.id || 'unknown'
             });
             document.getElementById('create-topic-modal').remove();
         } catch (e) {
