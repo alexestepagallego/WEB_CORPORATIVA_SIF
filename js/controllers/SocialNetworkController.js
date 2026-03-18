@@ -64,12 +64,12 @@ export class SocialNetworkController {
         this.loadMembers();
     }
 
-    handleImageUpload(event) {
+    async handleImageUpload(event) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = (e) => {
-                this.currentImageDataUrl = e.target.result;
+            reader.onload = async (e) => {
+                this.currentImageDataUrl = await this.compressImage(e.target.result, 800, 0.7);
                 const previewContainer = document.getElementById('image-preview-container');
                 const previewImage = document.getElementById('image-preview');
                 previewImage.src = this.currentImageDataUrl;
@@ -521,12 +521,12 @@ export class SocialNetworkController {
         this.newAvatarBase64 = null;
     }
 
-    handleProfileAvatarChange(event) {
+    async handleProfileAvatarChange(event) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = (e) => {
-                this.newAvatarBase64 = e.target.result;
+            reader.onload = async (e) => {
+                this.newAvatarBase64 = await this.compressImage(e.target.result, 800, 0.7);
                 // Update the preview immediately
                 const avatarContainer = document.querySelector('.edit-avatar-container');
                 if (avatarContainer) {
@@ -598,5 +598,30 @@ export class SocialNetworkController {
             this.unsubscribePosts();
             this.unsubscribePosts = null;
         }
+    }
+
+    compressImage(dataUrl, maxWidth, quality) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                if (width > maxWidth) {
+                    height = Math.round((height * maxWidth) / width);
+                    width = maxWidth;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+                resolve(compressedDataUrl);
+            };
+            img.src = dataUrl;
+        });
     }
 }
