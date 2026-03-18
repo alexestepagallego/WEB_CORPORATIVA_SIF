@@ -499,4 +499,101 @@ class StorageService {
             });
         } catch (e) { console.error("markAlertAsSeen error:", e); }
     }
+
+    // --- FORUM SYSTEM ---
+
+    async subscribeToForumTopics(callback) {
+        await this.ensureReady();
+        if (!this.db || !this.f) return () => {};
+        try {
+            const q = this.f.query(
+                this.f.collection(this.db, "forum_topics"),
+                this.f.orderBy("createdAt", "desc")
+            );
+            return this.f.onSnapshot(q, (snapshot) => {
+                const topics = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                // Fallback sort client-side in case index doesn't kick in instantly
+                topics.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                callback(topics);
+            });
+        } catch (e) {
+            console.error("subscribeToForumTopics error:", e);
+            // Fallback without orderBy if index is missing
+            try {
+                const fbakQ = this.f.query(this.f.collection(this.db, "forum_topics"));
+                return this.f.onSnapshot(fbakQ, (snapshot) => {
+                    const topics = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    topics.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    callback(topics);
+                });
+            } catch(e2) { return () => {}; }
+        }
+    }
+
+    async createForumTopic(topicData) {
+        await this.ensureReady();
+        if (!this.db || !this.f) return;
+        try {
+            await this.f.addDoc(this.f.collection(this.db, "forum_topics"), {
+                ...topicData,
+                createdAt: new Date().toISOString(),
+                replyCount: 0
+            });
+        } catch (e) { console.error("createForumTopic error:", e); throw e; }
+    }
+
+    async getForumTopic(topicId) {
+        await this.ensureReady();
+        if (!this.db || !this.f) return null;
+        try {
+            const docRef = this.f.doc(this.db, "forum_topics", topicId);
+            const docSnap = await this.f.getDoc(docRef);
+            if (docSnap.exists()) {
+                return { id: docSnap.id, ...docSnap.data() };
+            }
+            return null;
+        } catch (e) { console.error("getForumTopic error:", e); return null; }
+    }
+
+    async subscribeToForumMessages(topicId, callback) {
+        await this.ensureReady();
+        if (!this.db || !this.f) return () => {};
+        try {
+            const q = this.f.query(
+                this.f.collection(this.db, "forum_messages"),
+                this.f.where("topicId", "==", topicId)
+            );
+            
+            return this.f.onSnapshot(q, (snapshot) => {
+                const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                // Sort client-side
+                messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+                callback(messages);
+            });
+        } catch (e) { console.error("subscribeToForumMessages error:", e); return () => {}; }
+    }
+
+    async createForumMessage(messageData) {
+        await this.ensureReady();
+        if (!this.db || !this.f) return;
+        try {
+            await this.f.addDoc(this.f.collection(this.db, "forum_messages"), {
+                ...messageData,
+                createdAt: new Date().toISOString()
+            });
+
+            // Update topic reply count and lastActivity
+            if (messageData.topicId) {
+                const topicRef = this.f.doc(this.db, "forum_topics", messageData.topicId);
+                const topicSnap = await this.f.getDoc(topicRef);
+                if (topicSnap.exists()) {
+                    const currentReplies = topicSnap.data().replyCount || 0;
+                    await this.f.updateDoc(topicRef, {
+                        replyCount: currentReplies + 1,
+                        lastActivity: new Date().toISOString()
+                    });
+                }
+            }
+        } catch (e) { console.error("createForumMessage error:", e); throw e; }
+    }
 }

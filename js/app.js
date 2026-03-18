@@ -5,6 +5,7 @@ class App {
         this.adminController = new AdminController(this);
         this.tutorController = new TutorController(this);
         this.studentController = new StudentController(this);
+        this.forumController = new ForumController(this);
 
         this.currentUser = null;
         this.currentRole = null;
@@ -46,6 +47,13 @@ class App {
         } else if (view === 'student-alerts') {
             pageTitle.textContent = 'Mis Alertas';
             await this.studentController.renderAlertsHistory(contentArea);
+        } else if (view === 'forum-list') {
+            pageTitle.textContent = 'Foro de Discusión';
+            await this.forumController.renderForumList(contentArea, headerActions);
+        } else if (view.startsWith('forum-topic-')) {
+            const topicId = view.split('forum-topic-')[1];
+            pageTitle.textContent = 'Tema de Debate';
+            await this.forumController.renderTopicView(contentArea, headerActions, topicId);
         }
     }
 }
