@@ -5,6 +5,7 @@ import { TutorController } from './controllers/TutorController.js';
 import { StudentController } from './controllers/StudentController.js';
 import { SocialNetworkController } from './controllers/SocialNetworkController.js';
 import { ChatController } from './controllers/ChatController.js';
+import { ForumController } from './controllers/ForumController.js';
 
 class App {
     constructor() {
@@ -15,6 +16,7 @@ class App {
         this.studentController = new StudentController(this);
         this.socialNetworkController = new SocialNetworkController(this);
         this.chatController = new ChatController(this);
+        this.forumController = new ForumController(this);
 
         this.currentUser = null;
         this.currentRole = null;
@@ -63,6 +65,13 @@ class App {
             pageTitle.textContent = 'Editar Perfil';
             await this.socialNetworkController.renderProfile(contentArea, this.currentUser.id);
             this.socialNetworkController.renderEditProfile();
+        } else if (view === 'forum-list') {
+            pageTitle.textContent = 'Foro';
+            await this.forumController.renderForumList(contentArea, headerActions);
+        } else if (view.startsWith('forum-topic-')) {
+            const topicId = view.replace('forum-topic-', '');
+            pageTitle.textContent = 'Tema del Foro';
+            await this.forumController.renderTopicView(contentArea, headerActions, topicId);
         }
     }
 }

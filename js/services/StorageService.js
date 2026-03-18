@@ -290,4 +290,60 @@ export class StorageService {
         const hydrated = await this._hydratePosts([{ id: postSnap.id, ...postSnap.data() }]);
         return hydrated[0];
     }
+
+    // --- FORUM SYSTEM ---
+
+    async subscribeToForumTopics(callback) {
+        const q = query(collection(this.db, 'forum_topics'), orderBy('lastActivity', 'desc'));
+        return onSnapshot(q, (snapshot) => {
+            const topics = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            callback(topics);
+        });
+    }
+
+    async getForumTopic(topicId) {
+        const topicSnap = await getDoc(doc(this.db, 'forum_topics', topicId));
+        return topicSnap.exists() ? { id: topicSnap.id, ...topicSnap.data() } : null;
+    }
+
+    async createForumTopic(topicData) {
+        const id = 'topic_' + Date.now();
+        const data = {
+            id,
+            ...topicData,
+            createdAt: new Date().toISOString(),
+            lastActivity: new Date().toISOString(),
+            replyCount: 0
+        };
+        await setDoc(doc(this.db, 'forum_topics', id), data);
+    }
+
+    async subscribeToForumMessages(topicId, callback) {
+        const q = query(collection(this.db, 'forum_messages'), where('topicId', '==', topicId), orderBy('createdAt', 'asc'));
+        return onSnapshot(q, (snapshot) => {
+            const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            callback(messages);
+        });
+    }
+
+    async createForumMessage(messageData) {
+        const id = 'fmsg_' + Date.now();
+        const data = {
+            id,
+            ...messageData,
+            createdAt: new Date().toISOString()
+        };
+        await setDoc(doc(this.db, 'forum_messages', id), data);
+
+        // Update topic's last activity and reply count
+        const topicRef = doc(this.db, 'forum_topics', messageData.topicId);
+        const topicSnap = await getDoc(topicRef);
+        if (topicSnap.exists()) {
+            const count = (topicSnap.data().replyCount || 0) + 1;
+            await updateDoc(topicRef, {
+                lastActivity: data.createdAt,
+                replyCount: count
+            });
+        }
+    }
 }
