@@ -319,10 +319,13 @@ export class StorageService {
     }
 
     async subscribeToForumMessages(topicId, callback) {
-        const q = query(collection(this.db, 'forum_messages'), where('topicId', '==', topicId), orderBy('createdAt', 'asc'));
+        const q = query(collection(this.db, 'forum_messages'), where('topicId', '==', topicId));
         return onSnapshot(q, (snapshot) => {
             const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
             callback(messages);
+        }, (error) => {
+            console.error("Error subscribing to forum messages:", error);
         });
     }
 

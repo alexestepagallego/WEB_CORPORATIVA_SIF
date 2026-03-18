@@ -141,7 +141,7 @@ export class ForumController {
             </div>
 
             <h4 style="margin-bottom:1rem; font-size:1.2rem; color:var(--text-main);">Respuestas</h4>
-            <div id="messages-container" style="display:flex; flex-direction:column; gap:1rem; margin-bottom:2rem;">
+            <div id="messages-container" class="replies-list" style="display:flex; flex-direction:column; gap:1rem; margin-bottom:2rem;">
                 <p style="text-align:center; font-size:0.9rem; color:var(--text-muted)">Cargando respuestas...</p>
             </div>
 
@@ -175,7 +175,7 @@ export class ForumController {
             let msgsHtml = '';
             messages.forEach(m => {
                 const date = new Date(m.createdAt).toLocaleString();
-                const isMyMessage = m.authorId === this.app.currentUser.id;
+                const isMyMessage = this.app.currentUser && m.authorId === this.app.currentUser.id;
                 const mAuthor = userMap[m.authorId] || {};
                 const mAuthorName = mAuthor.name || mAuthor.email || 'Anónimo';
                 const mAuthorRole = mAuthor.role || 'usuario';
@@ -218,7 +218,7 @@ export class ForumController {
             
             await addDoc(messagesRef, {
                 topicId: topicId,
-                authorId: this.app.currentUser.id || 'unknown',
+                authorId: (this.app.currentUser && this.app.currentUser.id) || 'unknown',
                 content: content,
                 createdAt: new Date().toISOString()
             });
@@ -287,7 +287,7 @@ export class ForumController {
             await this.db.createForumTopic({
                 title: title,
                 description: content,
-                authorId: this.app.currentUser.id || 'unknown'
+                authorId: (this.app.currentUser && this.app.currentUser.id) || 'unknown'
             });
             document.getElementById('create-topic-modal').remove();
         } catch (e) {
