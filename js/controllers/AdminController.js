@@ -1,4 +1,4 @@
-class AdminController {
+export class AdminController {
     constructor(app) {
         this.app = app;
         this.activeTab = 'students'; // 'students' or 'tutors'

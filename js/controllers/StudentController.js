@@ -1,4 +1,4 @@
-class StudentController {
+export class StudentController {
     constructor(app) {
         this.app = app;
     }

@@ -1,4 +1,4 @@
-class TutorController {
+export class TutorController {
     constructor(app) {
         this.app = app;
         this.selectedStudentChat = null;

@@ -1,24 +1,6 @@
-class AuthController {
+export class AuthController {
     constructor(app) {
         this.app = app;
-        this.selectedRole = null;
-    }
-
-    showLoginForm(role) {
-        this.selectedRole = role;
-        document.getElementById('role-selection').classList.add('hidden');
-        document.getElementById('login-form').classList.remove('hidden');
-
-        // Focus on username input
-        setTimeout(() => document.getElementById('username-input').focus(), 100);
-    }
-
-    backToRoles() {
-        this.selectedRole = null;
-        document.getElementById('login-form').classList.add('hidden');
-        document.getElementById('role-selection').classList.remove('hidden');
-        document.getElementById('username-input').value = '';
-        document.getElementById('password-input').value = '';
     }
 
     async login() {
@@ -30,65 +12,47 @@ class AuthController {
             return;
         }
 
-        if (!this.selectedRole) {
-            alert('Error: No se ha seleccionado ningún rol. Por favor, recargue la página.');
-            return;
-        }
-
-        await this.authenticate(username, password, this.selectedRole);
+        await this.authenticate(username, password);
     }
 
-    async authenticate(username, password, role) {
+    async authenticate(username, password) {
         try {
-            this.app.currentRole = role;
-            let user = null;
-            let usersList = [];
-
-            // 1. Fetch Users based on Role
-            if (role === 'admin') {
-                usersList = await this.app.db.getAdmins();
-            } else if (role === 'tutor') {
-                usersList = await this.app.db.getTutors();
-            } else if (role === 'student') {
-                usersList = await this.app.db.getStudents();
-            }
-
-            // 2. Find User
-            user = usersList.find(u => u.email === username || u.name === username);
+            let user = await this.app.db.getUserByUsername(username);
+            let role = 'student'; // Default fallback role
 
             if (user) {
                 // --- USER EXISTS: VALIDATE PASSWORD ---
                 console.log(`Usuario encontrado: ${user.name}`);
+                role = user.role || role; 
+                this.app.currentRole = role;
+                
                 if (user.password && user.password !== password) {
                     alert('Contraseña incorrecta.');
                     return;
                 }
-                // If user has no password saved (legacy data), we might allow or update it. 
-                // For now, we assume if it exists, it's correct.
+                
                 if (!user.password) {
-                    // Start saving password for legacy
+                    // Start saving password for legacy mock data users
                     user.password = password;
                     await this.app.db.saveUser(user, role);
                 }
             } else {
                 // --- USER DOES NOT EXIST: REGISTER NEW USER ---
-                console.log("Usuario no encontrado. Registrando nuevo usuario...");
+                console.log("Usuario no encontrado. Registrando nuevo desarrollador por defecto...");
+                this.app.currentRole = 'student';
 
                 user = {
-                    id: `${role}_${Date.now()}`,
+                    id: `student_${Date.now()}`,
                     name: username.includes('@') ? username.split('@')[0] : username,
                     email: username,
-                    password: password, // Save the password
-                    role: role
+                    password: password, 
+                    role: 'student',
+                    status: 'unassigned',
+                    assignedTutorId: null
                 };
 
-                if (role === 'student') {
-                    user.status = 'unassigned';
-                    user.assignedTutorId = null;
-                }
-
-                await this.app.db.saveUser(user, role);
-                alert(`Nuevo ${role} registrado exitosamente.`);
+                await this.app.db.saveUser(user, 'student');
+                alert(`Nuevo desarrollador registrado exitosamente. (Si eres Líder Técnico/PM, contacta al administrador del sistema)`);
             }
 
             // --- PROCEED TO LOGIN ---
@@ -136,9 +100,12 @@ class AuthController {
     logout() {
         this.app.currentUser = null;
         this.app.currentRole = null;
-        this.selectedRole = null;
         document.getElementById('app').classList.add('hidden');
         document.getElementById('login-view').classList.remove('hidden');
+
+        // Clear forms
+        document.getElementById('username-input').value = '';
+        document.getElementById('password-input').value = '';
 
         // Clear alerts
         const alertContainer = document.getElementById('alert-container');
@@ -161,8 +128,6 @@ class AuthController {
             this.app.tutorController.alertsUnsubscribe();
             this.app.tutorController.alertsUnsubscribe = null;
         }
-
-        this.backToRoles();
     }
 
     updateUserProfile() {
@@ -170,11 +135,19 @@ class AuthController {
 
         document.getElementById('user-name').textContent = this.app.currentUser.name;
         let roleName = 'Usuario';
-        if (this.app.currentRole === 'admin') roleName = 'Administrador';
-        if (this.app.currentRole === 'tutor') roleName = 'Tutor Académico';
-        if (this.app.currentRole === 'student') roleName = 'Estudiante';
+        if (this.app.currentRole === 'admin') roleName = 'Product Manager';
+        if (this.app.currentRole === 'tutor') roleName = 'Líder Técnico';
+        if (this.app.currentRole === 'student') roleName = 'Desarrollador';
 
         document.getElementById('user-role').textContent = roleName;
-        document.getElementById('user-avatar').textContent = this.app.currentUser.name.charAt(0).toUpperCase();
+        
+        const avatarEl = document.getElementById('user-avatar');
+        if (this.app.currentUser.avatarBase64) {
+            avatarEl.innerHTML = `<img src="${this.app.currentUser.avatarBase64}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            // remove text content if there's an image
+            avatarEl.style.padding = '0';
+        } else {
+            avatarEl.innerHTML = this.app.currentUser.name.charAt(0).toUpperCase();
+        }
     }
 }
