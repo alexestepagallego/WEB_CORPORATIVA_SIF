@@ -1,8 +1,6 @@
 import { StorageService } from './services/StorageService.js';
 import { AuthController } from './controllers/AuthController.js';
 import { AdminController } from './controllers/AdminController.js';
-import { TutorController } from './controllers/TutorController.js';
-import { StudentController } from './controllers/StudentController.js';
 import { SocialNetworkController } from './controllers/SocialNetworkController.js';
 import { ChatController } from './controllers/ChatController.js';
 import { ForumController } from './controllers/ForumController.js';
@@ -15,8 +13,6 @@ class App {
         this.db = new StorageService();
         this.authController = new AuthController(this);
         this.adminController = new AdminController(this);
-        this.tutorController = new TutorController(this);
-        this.studentController = new StudentController(this);
         this.socialNetworkController = new SocialNetworkController(this);
         this.chatController = new ChatController(this);
         this.forumController = new ForumController(this);
@@ -47,24 +43,12 @@ class App {
         if (activeNav) activeNav.classList.add('active');
 
         if (view === 'admin-dashboard') {
-            pageTitle.textContent = 'Gestión de Alumnos';
+            pageTitle.textContent = 'Directorio de Empleados';
             await this.adminController.renderDashboard(contentArea, headerActions);
         } else if (view === 'global-chat') {
             pageTitle.textContent = 'Chat Global';
             await this.chatController.renderGlobalChat(contentArea);
-        } else if (view === 'tutor-history') {
-            pageTitle.textContent = 'Historial de Reuniones';
-            await this.tutorController.renderHistory(contentArea);
-        } else if (view === 'tutor-alerts') {
-            pageTitle.textContent = 'Gestión de Alertas';
-            await this.tutorController.renderAlerts(contentArea);
-        } else if (view === 'student-alerts') {
-            pageTitle.textContent = 'Mis Alertas';
-            await this.studentController.renderAlertsHistory(contentArea);
         } else if (view === 'social-network') {
-            pageTitle.textContent = 'Red Social';
-            await this.socialNetworkController.renderSocialNetwork(contentArea);
-        } else if (view === 'profile') {
             pageTitle.textContent = 'Perfil de Usuario';
             await this.socialNetworkController.renderProfile(contentArea, param);
         } else if (view === 'edit-profile') {
