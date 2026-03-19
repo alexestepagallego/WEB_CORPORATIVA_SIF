@@ -4,6 +4,9 @@ import {
     doc, onSnapshot, setDoc, query, where, orderBy, deleteDoc, 
     getDoc, arrayUnion, arrayRemove 
 } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+import { 
+    getStorage, ref, uploadBytes, getDownloadURL 
+} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,10 +21,12 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 export class StorageService {
     constructor() {
         this.db = db;
+        this.storage = storage;
     }
 
     async getStudents() {
@@ -351,6 +356,13 @@ export class StorageService {
     }
 
     // --- DRIVE SYSTEM ---
+
+    async uploadDriveFile(file) {
+        const uniqueName = Date.now() + '_' + file.name;
+        const storageRef = ref(this.storage, 'drive_files/' + uniqueName);
+        await uploadBytes(storageRef, file);
+        return await getDownloadURL(storageRef);
+    }
 
     async getDriveItemsByParent(parentId) {
         const q = query(collection(this.db, 'drive_items'), where('parentId', '==', parentId));
