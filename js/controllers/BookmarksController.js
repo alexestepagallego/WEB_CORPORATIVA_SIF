@@ -35,8 +35,6 @@ export class BookmarksController {
         container.addEventListener('click', (e) => {
             const addBtn = e.target.closest('#btn-add-bookmark');
             if (addBtn) {
-                console.log('Botón pulsado correctamente');
-                alert('Funciona');
                 this.showBookmarkModal();
             }
         });
@@ -62,7 +60,10 @@ export class BookmarksController {
         const tagsSet = new Set();
         this.bookmarks.forEach(b => {
             if (b.tags) {
-                b.tags.forEach(t => tagsSet.add(t.trim()));
+                b.tags.forEach(t => {
+                    const name = typeof t === 'object' && t !== null ? t.text : String(t);
+                    tagsSet.add(name.trim());
+                });
             }
         });
         this.allTags = Array.from(tagsSet).sort();
@@ -85,7 +86,12 @@ export class BookmarksController {
                     </h3>
                     <a href="${b.url}" target="_blank" rel="noopener noreferrer" class="bookmark-url" title="${b.url}">${this.escapeHtml(b.url)}</a>
                     <div class="bookmark-tags">
-                        ${(b.tags || []).map(t => `<span class="tag-badge">${this.escapeHtml(t)}</span>`).join('')}
+                        ${(b.tags || []).map(t => {
+                            const isObj = typeof t === 'object' && t !== null;
+                            const label = isObj ? t.text : String(t);
+                            const theme = isObj ? t.theme : 'tag-blue';
+                            return `<span class="tag-badge ${theme}">${this.escapeHtml(label)}</span>`;
+                        }).join('')}
                     </div>
                 </div>
                 <div class="bookmark-actions">
@@ -140,35 +146,61 @@ export class BookmarksController {
         const isEditing = !!bookmark;
         const modalId = 'bookmark-modal';
         
-        let tagsDatalist = `<datalist id="user-tags-list">`;
-        this.allTags.forEach(t => {
-            tagsDatalist += `<option value="${this.escapeHtml(t)}">`;
-        });
-        tagsDatalist += `</datalist>`;
+        // Parse existing tags
+        let currentTags = [];
+        if (isEditing && bookmark.tags) {
+            currentTags = bookmark.tags.map(t => {
+                const isObj = typeof t === 'object' && t !== null;
+                return {
+                    text: isObj ? t.text : String(t),
+                    theme: isObj ? t.theme : 'tag-blue'
+                };
+            });
+        }
 
         const modalHtml = `
             <div class="modal-overlay" id="${modalId}" style="display: flex;">
-                <div class="modal-content" style="max-width: 500px;">
+                <div class="modal-content modal-content-elevated" style="max-width: 500px; width: 100%;">
                     <div class="modal-header">
                         <h3>${isEditing ? 'Editar Marcador' : 'Añadir Marcador'}</h3>
                         <button class="btn-close" onclick="document.getElementById('${modalId}').remove()">&times;</button>
                     </div>
                     <div class="modal-body">
                         <form id="bookmark-form">
-                            <div class="form-group">
-                                <label for="bookmark-url">URL</label>
-                                <input type="url" id="bookmark-url" class="login-input" placeholder="https://ejemplo.com" value="${isEditing ? this.escapeHtml(bookmark.url) : ''}" required>
-                                <small style="color: #666; font-size: 12px;">Debe incluir http:// o https://</small>
+                            <div class="form-card-bg">
+                                <div class="form-group">
+                                    <label for="bookmark-url">URL</label>
+                                    <input type="url" id="bookmark-url" class="login-input" placeholder="https://ejemplo.com" value="${isEditing ? this.escapeHtml(bookmark.url) : ''}" required>
+                                </div>
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label for="bookmark-name">Nombre</label>
+                                    <input type="text" id="bookmark-name" class="login-input" placeholder="Título del enlace" value="${isEditing ? this.escapeHtml(bookmark.name) : ''}" required>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="bookmark-name">Nombre</label>
-                                <input type="text" id="bookmark-name" class="login-input" placeholder="Título del enlace" value="${isEditing ? this.escapeHtml(bookmark.name) : ''}" required>
+
+                            <div class="form-card-bg">
+                                <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Etiquetas</label>
+                                <div id="modal-tags-list" style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom: 1rem;"></div>
+                                
+                                <div id="tag-editor-area" style="display:none; margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border);">
+                                    <input type="text" id="new-tag-text" class="login-input" placeholder="Nombre de etiqueta (ej: Tutorial)" style="margin-bottom:0.75rem;">
+                                    <div style="display:flex; gap:0.5rem; margin-bottom: 0.75rem;" id="tag-color-picker">
+                                        <button type="button" class="color-picker-btn tag-blue selected" data-theme="tag-blue"></button>
+                                        <button type="button" class="color-picker-btn tag-green" data-theme="tag-green"></button>
+                                        <button type="button" class="color-picker-btn tag-red" data-theme="tag-red"></button>
+                                        <button type="button" class="color-picker-btn tag-orange" data-theme="tag-orange"></button>
+                                        <button type="button" class="color-picker-btn tag-purple" data-theme="tag-purple"></button>
+                                    </div>
+                                    <div style="display:flex; gap:0.5rem;">
+                                        <button type="button" id="btn-save-tag" class="btn btn-sm btn-primary">Guardar Etiqueta</button>
+                                        <button type="button" id="btn-cancel-tag" class="btn btn-sm btn-outline">Cancelar</button>
+                                    </div>
+                                </div>
+                                <button type="button" id="btn-add-tag-trigger" class="btn btn-sm btn-outline" style="width:100%;">
+                                    + Añadir Etiqueta
+                                </button>
                             </div>
-                            <div class="form-group">
-                                <label for="bookmark-tags">Etiquetas (separadas por comas)</label>
-                                <input type="text" id="bookmark-tags" class="login-input" list="user-tags-list" placeholder="React, Diseño, Tutorial..." value="${isEditing && bookmark.tags ? this.escapeHtml(bookmark.tags.join(', ')) : ''}">
-                                ${tagsDatalist}
-                            </div>
+
                             <div id="bookmark-error" style="color: #ef4444; margin-bottom: 10px; font-size: 14px; display: none;"></div>
                             <div style="text-align: right; margin-top: 20px;">
                                 <button type="button" class="btn-secondary" onclick="document.getElementById('${modalId}').remove()" style="margin-right: 10px;">Cancelar</button>
@@ -182,47 +214,129 @@ export class BookmarksController {
 
         document.getElementById('modal-container').insertAdjacentHTML('beforeend', modalHtml);
 
+        // Tags Logic
+        const renderModalTags = () => {
+            const listEl = document.getElementById('modal-tags-list');
+            if (!listEl) return;
+            if (currentTags.length === 0) {
+                listEl.innerHTML = `<span style="color:#94a3b8; font-size:0.85rem;">No hay etiquetas aplicadas.</span>`;
+                return;
+            }
+            listEl.innerHTML = currentTags.map((t, idx) => `
+                <span class="tag-badge ${t.theme} interactive" data-idx="${idx}">
+                    ${this.escapeHtml(t.text)}
+                    <span class="remove-tag" data-idx="${idx}" title="Eliminar etiqueta">&times;</span>
+                </span>
+            `).join('');
+        };
+        renderModalTags();
+
+        let editingTagIndex = -1;
+        const tagEditorArea = document.getElementById('tag-editor-area');
+        const triggerBtn = document.getElementById('btn-add-tag-trigger');
+        const newTagText = document.getElementById('new-tag-text');
+        const colorBtns = document.querySelectorAll('#tag-color-picker .color-picker-btn');
+
+        const selectColorBtn = (theme) => {
+            colorBtns.forEach(btn => btn.classList.remove('selected'));
+            const b = document.querySelector(`#tag-color-picker .${theme}`);
+            if (b) b.classList.add('selected');
+        };
+
+        const openTagEditor = (idx = -1) => {
+            editingTagIndex = idx;
+            tagEditorArea.style.display = 'block';
+            triggerBtn.style.display = 'none';
+            if (idx >= 0) {
+                const t = currentTags[idx];
+                newTagText.value = t.text;
+                selectColorBtn(t.theme);
+            } else {
+                newTagText.value = '';
+                selectColorBtn('tag-blue');
+            }
+            newTagText.focus();
+        };
+
+        const closeTagEditor = () => {
+            tagEditorArea.style.display = 'none';
+            triggerBtn.style.display = 'block';
+            editingTagIndex = -1;
+        };
+
+        triggerBtn.addEventListener('click', () => openTagEditor(-1));
+        document.getElementById('btn-cancel-tag').addEventListener('click', closeTagEditor);
+
+        colorBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                selectColorBtn(e.target.dataset.theme);
+            });
+        });
+
+        document.getElementById('btn-save-tag').addEventListener('click', () => {
+            const txt = newTagText.value.trim();
+            if (!txt) return;
+            const selectedBtn = document.querySelector('#tag-color-picker .selected');
+            const theme = selectedBtn ? selectedBtn.dataset.theme : 'tag-blue';
+            
+            if (editingTagIndex >= 0) {
+                currentTags[editingTagIndex] = { text: txt, theme };
+            } else {
+                currentTags.push({ text: txt, theme });
+            }
+            renderModalTags();
+            closeTagEditor();
+        });
+
+        document.getElementById('modal-tags-list').addEventListener('click', (e) => {
+            const removeBtn = e.target.closest('.remove-tag');
+            if (removeBtn) {
+                e.stopPropagation();
+                const idx = parseInt(removeBtn.dataset.idx, 10);
+                currentTags.splice(idx, 1);
+                renderModalTags();
+                return;
+            }
+            const badge = e.target.closest('.tag-badge.interactive');
+            if (badge) {
+                const idx = parseInt(badge.dataset.idx, 10);
+                openTagEditor(idx);
+            }
+        });
+
+        // Submit form (Cleaned logic)
         document.getElementById('bookmark-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            console.log("[Bookmarks] Evento submit capturado.");
             
             const urlInput = document.getElementById('bookmark-url').value.trim();
             const nameInput = document.getElementById('bookmark-name').value.trim();
-            const tagsInput = document.getElementById('bookmark-tags').value.trim();
             const errorDiv = document.getElementById('bookmark-error');
 
-            console.log("[Bookmarks] Validando URL:", urlInput);
             if (!this.isValidUrl(urlInput)) {
-                console.warn("[Bookmarks] Validación fallida: URL inválida.");
                 errorDiv.textContent = "La URL no es válida. Asegúrate de incluir http:// o https://";
+                errorDiv.style.display = "block";
+                return;
+            }
+            
+            if (!this.app.currentUser) {
+                errorDiv.textContent = "Error: Sesión no válida. Por favor, vuelva a iniciar sesión.";
                 errorDiv.style.display = "block";
                 return;
             }
             errorDiv.style.display = "none";
 
-            const tagsArray = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(t => t) : [];
-
-            if (!this.app.currentUser) {
-                console.error("[Bookmarks] Error Crítico: No hay usuario autenticado (this.app.currentUser es null).");
-                errorDiv.textContent = "Error: Sesión no válida. Por favor, vuelva a iniciar sesión.";
-                errorDiv.style.display = "block";
-                return;
-            }
-
             const bookmarkData = {
                 url: urlInput,
                 name: nameInput,
-                tags: tagsArray,
+                tags: currentTags,
                 userId: this.app.currentUser.id
             };
-            console.log("[Bookmarks] Datos capturados listos para enviar:", bookmarkData);
 
             const submitBtn = e.target.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
             submitBtn.textContent = 'Guardando...';
 
             try {
-                console.log("[Bookmarks] Iniciando guardado en DB (isEditing:", isEditing, ")");
                 if (isEditing) {
                     await this.app.db.updateBookmark(bookmark.id, bookmarkData);
                     const index = this.bookmarks.findIndex(b => b.id === bookmark.id);
@@ -233,14 +347,17 @@ export class BookmarksController {
                     const newId = await this.app.db.addBookmark(bookmarkData);
                     this.bookmarks.unshift({ id: newId, ...bookmarkData, createdAt: new Date().toISOString() });
                 }
-                console.log("[Bookmarks] Guardado exitoso en DB");
 
                 this.extractAllTags();
-                const term = document.getElementById('bookmarks-search') ? document.getElementById('bookmarks-search').value.toLowerCase().trim() : '';
+                const searchEl = document.getElementById('bookmarks-search');
+                const term = searchEl ? searchEl.value.toLowerCase().trim() : '';
                 if(term) {
                      const filtered = this.bookmarks.filter(b => 
                         b.name.toLowerCase().includes(term) || 
-                        (b.tags && b.tags.some(t => t.toLowerCase().includes(term)))
+                        (b.tags && b.tags.some(t => {
+                            const name = typeof t === 'object' && t !== null ? t.text : String(t);
+                            return name.toLowerCase().includes(term);
+                        }))
                     );
                     this.renderBookmarksList(filtered);
                 } else {
@@ -250,7 +367,7 @@ export class BookmarksController {
                 document.getElementById(modalId).remove();
                 this.showNotification("Marcador guardado con éxito", "success");
             } catch (err) {
-                console.error("[Bookmarks] Error al guardar marcador en DB:", err);
+                console.error("[Bookmarks] Error al guardar:", err);
                 errorDiv.textContent = "Hubo un error al guardar el marcador. Puede que no tengas permisos en la Base de Datos.";
                 errorDiv.style.display = "block";
                 submitBtn.disabled = false;
