@@ -31,23 +31,31 @@ export class BookmarksController {
 
         this.renderBookmarksList(this.bookmarks);
 
-        // Event listeners
-        document.getElementById('btn-add-bookmark').addEventListener('click', () => {
-            this.showBookmarkModal();
+        // Event listeners (Delegación de eventos para mayor robustez)
+        container.addEventListener('click', (e) => {
+            const addBtn = e.target.closest('#btn-add-bookmark');
+            if (addBtn) {
+                console.log('Botón pulsado correctamente');
+                alert('Funciona');
+                this.showBookmarkModal();
+            }
         });
 
-        document.getElementById('bookmarks-search').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase().trim();
-            if (!term) {
-                this.renderBookmarksList(this.bookmarks);
-                return;
-            }
-            const filtered = this.bookmarks.filter(b => 
-                b.name.toLowerCase().includes(term) || 
-                (b.tags && b.tags.some(t => t.toLowerCase().includes(term)))
-            );
-            this.renderBookmarksList(filtered);
-        });
+        const searchInput = document.getElementById('bookmarks-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase().trim();
+                if (!term) {
+                    this.renderBookmarksList(this.bookmarks);
+                    return;
+                }
+                const filtered = this.bookmarks.filter(b => 
+                    b.name.toLowerCase().includes(term) || 
+                    (b.tags && b.tags.some(t => t.toLowerCase().includes(term)))
+                );
+                this.renderBookmarksList(filtered);
+            });
+        }
     }
 
     extractAllTags() {
@@ -176,13 +184,16 @@ export class BookmarksController {
 
         document.getElementById('bookmark-form').addEventListener('submit', async (e) => {
             e.preventDefault();
+            console.log("[Bookmarks] Evento submit capturado.");
             
             const urlInput = document.getElementById('bookmark-url').value.trim();
             const nameInput = document.getElementById('bookmark-name').value.trim();
             const tagsInput = document.getElementById('bookmark-tags').value.trim();
             const errorDiv = document.getElementById('bookmark-error');
 
+            console.log("[Bookmarks] Validando URL:", urlInput);
             if (!this.isValidUrl(urlInput)) {
+                console.warn("[Bookmarks] Validación fallida: URL inválida.");
                 errorDiv.textContent = "La URL no es válida. Asegúrate de incluir http:// o https://";
                 errorDiv.style.display = "block";
                 return;
@@ -191,18 +202,27 @@ export class BookmarksController {
 
             const tagsArray = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(t => t) : [];
 
+            if (!this.app.currentUser) {
+                console.error("[Bookmarks] Error Crítico: No hay usuario autenticado (this.app.currentUser es null).");
+                errorDiv.textContent = "Error: Sesión no válida. Por favor, vuelva a iniciar sesión.";
+                errorDiv.style.display = "block";
+                return;
+            }
+
             const bookmarkData = {
                 url: urlInput,
                 name: nameInput,
                 tags: tagsArray,
                 userId: this.app.currentUser.id
             };
+            console.log("[Bookmarks] Datos capturados listos para enviar:", bookmarkData);
 
             const submitBtn = e.target.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
             submitBtn.textContent = 'Guardando...';
 
             try {
+                console.log("[Bookmarks] Iniciando guardado en DB (isEditing:", isEditing, ")");
                 if (isEditing) {
                     await this.app.db.updateBookmark(bookmark.id, bookmarkData);
                     const index = this.bookmarks.findIndex(b => b.id === bookmark.id);
@@ -213,6 +233,7 @@ export class BookmarksController {
                     const newId = await this.app.db.addBookmark(bookmarkData);
                     this.bookmarks.unshift({ id: newId, ...bookmarkData, createdAt: new Date().toISOString() });
                 }
+                console.log("[Bookmarks] Guardado exitoso en DB");
 
                 this.extractAllTags();
                 const term = document.getElementById('bookmarks-search') ? document.getElementById('bookmarks-search').value.toLowerCase().trim() : '';
@@ -227,14 +248,42 @@ export class BookmarksController {
                 }
 
                 document.getElementById(modalId).remove();
+                this.showNotification("Marcador guardado con éxito", "success");
             } catch (err) {
-                console.error("Error saving bookmark", err);
-                errorDiv.textContent = "Hubo un error al guardar el marcador. Inténtalo de nuevo.";
+                console.error("[Bookmarks] Error al guardar marcador en DB:", err);
+                errorDiv.textContent = "Hubo un error al guardar el marcador. Puede que no tengas permisos en la Base de Datos.";
                 errorDiv.style.display = "block";
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Guardar';
+                this.showNotification("Error al guardar el marcador", "error");
             }
         });
+    }
+
+    showNotification(message, type = 'success') {
+        const container = document.getElementById('alert-container');
+        if (!container) return;
+
+        const alertId = 'toast-' + Date.now();
+        const bgColor = type === 'success' ? '#dcfce7' : '#fee2e2';
+        const borderColor = type === 'success' ? '#16a34a' : '#ef4444';
+        const textColor = type === 'success' ? '#166534' : '#991b1b';
+
+        const alertHtml = `
+            <div id="${alertId}" class="alerta-normal" style="background-color: ${bgColor}; border-color: ${borderColor}; color: ${textColor}; z-index: 9999;">
+                <div class="alerta-header">
+                    <span>${type === 'success' ? 'Éxito' : 'Error'}</span>
+                    <button class="alerta-close" onclick="document.getElementById('${alertId}').remove()">&times;</button>
+                </div>
+                <div>${message}</div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', alertHtml);
+
+        setTimeout(() => {
+            const el = document.getElementById(alertId);
+            if (el) el.remove();
+        }, 5000);
     }
 
     isValidUrl(string) {
