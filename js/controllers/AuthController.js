@@ -21,23 +21,28 @@ export class AuthController {
             let role = 'employee';
 
             if (user) {
-                // --- USER EXISTS: VALIDATE PASSWORD ---
+                // --- USUARIO EXISTE: VALIDAR CONTRASEÑA ---
                 console.log(`Usuario encontrado: ${user.name}`);
+                
+                // FIX CRÍTICO: Decirle a la app quién es el usuario INMEDIATAMENTE
+                this.app.currentUser = user;
+                
                 role = user.role || role; 
                 this.app.currentRole = role;
                 
                 if (user.password && user.password !== password) {
                     alert('Contraseña incorrecta.');
+                    this.app.currentUser = null; // Por seguridad, lo borramos si falla
                     return;
                 }
                 
                 if (!user.password) {
-                    // Start saving password for legacy mock data users
+                    // Guardar contraseña para usuarios antiguos (mock data)
                     user.password = password;
                     await this.app.db.saveUser(user, role);
                 }
             } else {
-                // --- USER DOES NOT EXIST: REGISTER NEW USER ---
+                // --- USUARIO NO EXISTE: REGISTRAR NUEVO EMPLEADO ---
                 console.log("Usuario no encontrado. Registrando nuevo empleado por defecto...");
                 this.app.currentRole = 'employee';
 
@@ -50,27 +55,27 @@ export class AuthController {
                     status: 'active'
                 };
 
+                // FIX CRÍTICO: Decirle a la app quién es el nuevo usuario INMEDIATAMENTE
+                this.app.currentUser = user;
+
                 await this.app.db.saveUser(user, 'employee');
                 alert(`Nuevo empleado registrado exitosamente.`);
             }
 
-            // --- PROCEED TO LOGIN ---
-            if (!user) {
+            // --- PROCEDER AL LOGIN ---
+            if (!this.app.currentUser) {
                 alert('Error crítico: No se pudo obtener el usuario.');
                 return;
             }
 
-            // CRITICAL FIX: Set currentUser BEFORE navigating
-            this.app.currentUser = user;
-
-            // Navigate to default main view (fixes blank screen bug)
+            // Navegar a la vista principal por defecto
             await this.app.navigate('global-chat');
 
             document.getElementById('login-view').classList.add('hidden');
             document.getElementById('app').classList.remove('hidden');
             this.updateUserProfile();
 
-            // Clear forms
+            // Limpiar formularios
             document.getElementById('username-input').value = '';
             document.getElementById('password-input').value = '';
         } catch (error) {
@@ -85,12 +90,7 @@ export class AuthController {
         document.getElementById('app').classList.add('hidden');
         document.getElementById('login-view').classList.remove('hidden');
 
-        // Clear forms
-        document.getElementById('username-input').value = '';
-        document.getElementById('password-input').value = '';
-
-        // No role-specific UI to hide/show since navbar is unified
-        // Clear forms
+        // Limpiar formularios
         document.getElementById('username-input').value = '';
         document.getElementById('password-input').value = '';
     }
@@ -104,7 +104,7 @@ export class AuthController {
         const avatarEl = document.getElementById('user-avatar');
         if (this.app.currentUser.avatarBase64) {
             avatarEl.innerHTML = `<img src="${this.app.currentUser.avatarBase64}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
-            // remove text content if there's an image
+            // Quitar el texto (inicial) si hay una imagen
             avatarEl.style.padding = '0';
         } else {
             avatarEl.innerHTML = this.app.currentUser.name.charAt(0).toUpperCase();
