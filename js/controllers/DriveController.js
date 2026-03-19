@@ -24,10 +24,10 @@ export class DriveController {
                     </div>
                     
                     <div class="drive-toolbar" style="display: flex; gap: 12px;">
-                        <button id="btn-new-folder" class="btn" style="background-color: #17a2b8; color: white; padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.2s;" onmouseover="this.style.filter='brightness(90%)'" onmouseout="this.style.filter=''">
+                        <button id="btn-new-folder" class="btn" style="background-color: var(--color-verde-codigo); color: white; padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.2s;" onmouseover="this.style.filter='brightness(90%)'" onmouseout="this.style.filter=''">
                             📁 Nueva Carpeta
                         </button>
-                        <button id="btn-add-link" class="btn" style="background-color: #007bff; color: white; padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.2s;" onmouseover="this.style.filter='brightness(90%)'" onmouseout="this.style.filter=''">
+                        <button id="btn-add-link" class="btn" style="background-color: var(--color-azul-claridad); color: white; padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.2s;" onmouseover="this.style.filter='brightness(90%)'" onmouseout="this.style.filter=''">
                             🔗 Añadir Recurso
                         </button>
                         <button id="btn-upload-file" class="btn" style="background-color: #f39c12; color: white; padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.2s;" onmouseover="this.style.filter='brightness(90%)'" onmouseout="this.style.filter=''">

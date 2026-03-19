@@ -1,13 +1,16 @@
 :root {
-    --primary: #2563eb;
-    --primary-dark: #1e40af;
-    --secondary: #64748b;
+    --color-verde-codigo: #1BBF77;
+    --color-azul-claridad: #1E46A7;
+    --color-gris-servicio: #777;
+    --primary: var(--color-verde-codigo);
+    --primary-dark: #159c60;
+    --secondary: var(--color-gris-servicio);
     --bg-body: #f4f7f6;
     --bg-card: #ffffff;
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --border: #e2e8f0;
-    --success: #10b981;
+    --text-main: #222222;
+    --text-muted: var(--color-gris-servicio);
+    --border: var(--color-azul-claridad);
+    --success: var(--color-verde-codigo);
     --warning: #f59e0b;
     --danger: #ef4444;
     --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
@@ -59,8 +62,8 @@ body {
 
 .btn-outline {
     background-color: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-main);
+    border: 1px solid var(--color-azul-claridad);
+    color: var(--color-azul-claridad);
 }
 
 .btn-outline:hover {
@@ -136,8 +139,7 @@ body {
 .btn-login {
     width: 100%;
     padding: 0.75rem;
-    background-color: #a16207;
-    /* Gold/Brown color from image */
+    background-color: var(--color-verde-codigo);
     color: white;
     border: none;
     border-radius: 0.375rem;
@@ -149,7 +151,7 @@ body {
 }
 
 .btn-login:hover {
-    background-color: #854d0e;
+    background-color: var(--primary-dark);
 }
 
 .forgot-password {
@@ -157,7 +159,7 @@ body {
 }
 
 .forgot-password a {
-    color: #a16207;
+    color: var(--color-azul-claridad);
     text-decoration: none;
     font-size: 0.9rem;
 }
@@ -187,7 +189,7 @@ body {
     display: flex;
     justify-content: space-between;
     font-size: 0.8rem;
-    color: #a16207;
+    color: var(--color-gris-servicio);
 }
 
 .role-buttons {
@@ -263,7 +265,7 @@ body {
 
 .nav-item:hover,
 .nav-item.active {
-    background-color: #334155;
+    background-color: var(--color-verde-codigo);
     color: white;
 }
 
@@ -331,12 +333,25 @@ body {
 }
 
 .top-bar {
-    background: var(--bg-card);
+    background: var(--color-azul-claridad);
+    color: white;
     padding: 1rem 2rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+h1, h2 {
+    color: var(--color-azul-claridad);
+}
+
+.top-bar h1, .top-bar h2 {
+    color: white;
+}
+
+a {
+    color: var(--color-azul-claridad);
 }
 
 .view-content {
