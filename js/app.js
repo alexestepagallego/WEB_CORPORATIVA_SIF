@@ -49,6 +49,9 @@ class App {
             pageTitle.textContent = 'Chat Global';
             await this.chatController.renderGlobalChat(contentArea);
         } else if (view === 'social-network') {
+            pageTitle.textContent = 'Red Social Corporativa';
+            await this.socialNetworkController.renderSocialNetwork(contentArea);
+        } else if (view === 'profile') {
             pageTitle.textContent = 'Perfil de Usuario';
             await this.socialNetworkController.renderProfile(contentArea, param);
         } else if (view === 'edit-profile') {
