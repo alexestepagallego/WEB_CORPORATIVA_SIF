@@ -9,36 +9,37 @@ export class DriveController {
     async renderDrive(container, headerActions) {
         const currentFolder = this.currentPath[this.currentPath.length - 1];
         
+        // Limpiamos los header actions si existieran
+        if (headerActions) {
+            headerActions.innerHTML = '';
+        }
+
         container.innerHTML = `
             <div class="drive-container" style="padding: 20px;">
-                <div class="drive-breadcrumbs" style="margin-bottom: 20px; font-size: 1.2rem; font-weight: 600; color: var(--text-color);">
-                    ${this.currentPath.map((folder, index) => `
-                        <span class="breadcrumb-item" data-index="${index}" style="cursor: pointer; color: ${index === this.currentPath.length - 1 ? 'var(--text-color)' : 'var(--primary-color)'};">
-                            ${folder.name}
-                        </span>
-                        ${index < this.currentPath.length - 1 ? ' &gt; ' : ''}
-                    `).join('')}
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                    <div class="drive-breadcrumbs" style="font-size: 1.2rem; font-weight: 600; color: var(--text-color);">
+                        ${this.currentPath.map((folder, index) => `
+                            <span class="breadcrumb-item" data-index="${index}" style="cursor: pointer; color: ${index === this.currentPath.length - 1 ? 'var(--text-color)' : 'var(--primary-color)'};">
+                                ${folder.name}
+                            </span>
+                            ${index < this.currentPath.length - 1 ? ' &gt; ' : ''}
+                        `).join('')}
+                    </div>
+                    
+                    <div class="drive-toolbar" style="display: flex; gap: 10px;">
+                        <button id="btn-new-folder-inline" class="btn" style="background-color: var(--secondary-color); color: white; padding: 10px 15px; border-radius: 6px; border: none; cursor: pointer; display: flex; align-items: center; font-weight: bold; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            📁 Nueva Carpeta
+                        </button>
+                        <button id="btn-add-link-inline" class="btn" style="background-color: var(--primary-color); color: white; padding: 10px 15px; border-radius: 6px; border: none; cursor: pointer; display: flex; align-items: center; font-weight: bold; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            🔗 Añadir Recurso
+                        </button>
+                    </div>
                 </div>
+
                 <div id="drive-items-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
                     <div style="text-align: center; grid-column: 1 / -1; color: var(--text-light);">Cargando...</div>
                 </div>
             </div>
-        `;
-
-        headerActions.innerHTML = `
-            <button id="btn-new-folder" class="btn" style="margin-right: 10px; background-color: var(--secondary-color); color: white;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:5px; vertical-align:middle;">
-                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                    <line x1="12" y1="11" x2="12" y2="17"></line>
-                    <line x1="9" y1="14" x2="15" y2="14"></line>
-                </svg> Nueva Carpeta
-            </button>
-            <button id="btn-add-link" class="btn" style="background-color: var(--primary-color); color: white;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:5px; vertical-align:middle;">
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                </svg> Añadir Recurso
-            </button>
         `;
 
         // Event Listeners for Breadcrumbs
@@ -52,9 +53,9 @@ export class DriveController {
             });
         });
 
-        // Event Listeners for Buttons
-        document.getElementById('btn-new-folder').addEventListener('click', () => this.handleNewFolder(container, headerActions));
-        document.getElementById('btn-add-link').addEventListener('click', () => this.handleAddLink(container, headerActions));
+        // Event Listeners for Buttons inside container
+        document.getElementById('btn-new-folder-inline').addEventListener('click', () => this.handleNewFolder(container, headerActions));
+        document.getElementById('btn-add-link-inline').addEventListener('click', () => this.handleAddLink(container, headerActions));
 
         // Fetch and render items
         await this.loadItems(currentFolder.id);
@@ -128,8 +129,8 @@ export class DriveController {
             authorId: authorId
         });
 
-        // Reload items
-        await this.loadItems(parentId);
+        // Reload the UI immediately by re-rendering
+        await this.renderDrive(container, headerActions);
     }
 
     async handleAddLink(container, headerActions) {
@@ -155,7 +156,7 @@ export class DriveController {
             authorId: authorId
         });
 
-        // Reload items
-        await this.loadItems(parentId);
+        // Reload the UI immediately by re-rendering
+        await this.renderDrive(container, headerActions);
     }
 }
