@@ -238,19 +238,24 @@ export class WikiController {
                     border-bottom: 1px solid #e2e8f0;
                 }
                 .wiki-accordion-content {
-                    max-height: 0;
-                    overflow: hidden;
-                    transition: max-height 0.3s ease-out;
+                    display: grid;
+                    grid-template-rows: 0fr;
+                    transition: grid-template-rows 0.3s ease-out;
                     background: #ffffff;
                 }
+                .wiki-accordion-item.active .wiki-accordion-content {
+                    grid-template-rows: 1fr;
+                }
                 .wiki-accordion-content-inner {
+                    min-height: 0;
+                    overflow: hidden;
                     padding: 0 1.5rem;
                     opacity: 0;
                     transition: opacity 0.3s ease, padding 0.3s ease;
                     line-height: 1.6;
                 }
                 .wiki-accordion-item.active .wiki-accordion-content-inner {
-                    padding: 1.25rem 1.5rem;
+                    padding: 1.25rem 1.5rem 1.5rem 1.5rem;
                     opacity: 1;
                     color: #475569;
                 }
@@ -570,19 +575,11 @@ export class WikiController {
                 allItems.forEach(i => {
                     if (i !== item && i.classList.contains('active')) {
                         i.classList.remove('active');
-                        const iContent = i.querySelector('.wiki-accordion-content');
-                        iContent.style.maxHeight = null;
                     }
                 });
 
                 // Alterna el acordeón clickeado
                 item.classList.toggle('active');
-                
-                if (item.classList.contains('active')) {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                } else {
-                    content.style.maxHeight = null;
-                }
             });
         });
     }
