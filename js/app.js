@@ -6,6 +6,7 @@ import { StudentController } from './controllers/StudentController.js';
 import { SocialNetworkController } from './controllers/SocialNetworkController.js';
 import { ChatController } from './controllers/ChatController.js';
 import { ForumController } from './controllers/ForumController.js';
+import { DriveController } from './controllers/DriveController.js';
 
 class App {
     constructor() {
@@ -17,6 +18,7 @@ class App {
         this.socialNetworkController = new SocialNetworkController(this);
         this.chatController = new ChatController(this);
         this.forumController = new ForumController(this);
+        this.driveController = new DriveController(this);
 
         this.currentUser = null;
         this.currentRole = null;
@@ -72,6 +74,9 @@ class App {
             const topicId = view.replace('forum-topic-', '');
             pageTitle.textContent = 'Tema del Foro';
             await this.forumController.renderTopicView(contentArea, headerActions, topicId);
+        } else if (view === 'drive') {
+            pageTitle.textContent = 'Archivos';
+            await this.driveController.renderDrive(contentArea, headerActions);
         }
     }
 }
