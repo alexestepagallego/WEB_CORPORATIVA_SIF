@@ -7,6 +7,7 @@ import { SocialNetworkController } from './controllers/SocialNetworkController.j
 import { ChatController } from './controllers/ChatController.js';
 import { ForumController } from './controllers/ForumController.js';
 import { DriveController } from './controllers/DriveController.js';
+import { WikiController } from './controllers/WikiController.js';
 
 class App {
     constructor() {
@@ -19,6 +20,7 @@ class App {
         this.chatController = new ChatController(this);
         this.forumController = new ForumController(this);
         this.driveController = new DriveController(this);
+        this.wikiController = new WikiController(this);
 
         this.currentUser = null;
         this.currentRole = null;
@@ -77,6 +79,9 @@ class App {
         } else if (view === 'recursos') {
             pageTitle.textContent = 'Recursos';
             await this.driveController.renderDrive(contentArea, headerActions);
+        } else if (view === 'wiki') {
+            pageTitle.textContent = 'Wiki Corporativa';
+            await this.wikiController.renderWiki(contentArea);
         }
     }
 }
