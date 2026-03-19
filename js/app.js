@@ -74,8 +74,8 @@ class App {
             const topicId = view.replace('forum-topic-', '');
             pageTitle.textContent = 'Tema del Foro';
             await this.forumController.renderTopicView(contentArea, headerActions, topicId);
-        } else if (view === 'drive') {
-            pageTitle.textContent = 'Archivos';
+        } else if (view === 'recursos') {
+            pageTitle.textContent = 'Recursos';
             await this.driveController.renderDrive(contentArea, headerActions);
         }
     }
