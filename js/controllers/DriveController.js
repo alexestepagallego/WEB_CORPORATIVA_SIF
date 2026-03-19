@@ -11,7 +11,6 @@ export class DriveController {
             headerActions.innerHTML = '';
         }
 
-        // Renderizamos la interfaz con los botones
         container.innerHTML = `
             <div class="drive-container" style="padding: 20px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">
@@ -25,10 +24,10 @@ export class DriveController {
                     </div>
                     
                     <div class="drive-toolbar" style="display: flex; gap: 12px;">
-                        <button id="btn-new-folder" class="btn" style="background-color: var(--secondary-color); color: white; padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.1s;">
+                        <button id="btn-new-folder" class="btn" style="background-color: #17a2b8; color: white; padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.2s;" onmouseover="this.style.filter='brightness(90%)'" onmouseout="this.style.filter=''">
                             📁 Nueva Carpeta
                         </button>
-                        <button id="btn-add-link" class="btn" style="background-color: var(--primary-color); color: white; padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.1s;">
+                        <button id="btn-add-link" class="btn" style="background-color: #007bff; color: white; padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.2s;" onmouseover="this.style.filter='brightness(90%)'" onmouseout="this.style.filter=''">
                             🔗 Añadir Recurso
                         </button>
                     </div>
@@ -40,7 +39,7 @@ export class DriveController {
             </div>
         `;
 
-        // Añadimos los eventos a las migas de pan
+        // Breadcrumbs Events
         container.querySelectorAll('.breadcrumb-item').forEach(item => {
             item.addEventListener('click', (e) => {
                 const index = parseInt(e.target.dataset.index);
@@ -51,7 +50,7 @@ export class DriveController {
             });
         });
 
-        // Forma SEGURA de añadir los eventos a los botones (evita fallos de carga rápida)
+        // Safe Button Events
         const btnNewFolder = container.querySelector('#btn-new-folder');
         const btnAddLink = container.querySelector('#btn-add-link');
 
@@ -62,7 +61,7 @@ export class DriveController {
             btnAddLink.addEventListener('click', () => this.handleAddLink(container, headerActions));
         }
 
-        // Cargamos los archivos de la base de datos
+        // Load content
         await this.loadItems(currentFolder.id);
     }
 
@@ -84,10 +83,10 @@ export class DriveController {
             grid.innerHTML = [...folders, ...links].map(item => `
                 <div class="drive-item" data-id="${item.id}" data-type="${item.type}" data-name="${item.name}" data-url="${item.url || ''}" style="background: white; border-radius: 10px; padding: 20px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center; border: 1px solid var(--border-color); transition: all 0.2s ease;">
                     ${item.type === 'folder' 
-                        ? `<svg width="54" height="54" viewBox="0 0 24 24" fill="var(--primary-light)" stroke="var(--primary-color)" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>`
-                        : `<svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--secondary-color);"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`
+                        ? `<svg width="54" height="54" viewBox="0 0 24 24" fill="#e3f2fd" stroke="#007bff" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>`
+                        : `<svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: #17a2b8;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`
                     }
-                    <span style="margin-top: 15px; font-weight: 600; font-size: 0.95rem; word-break: break-word; line-height: 1.3;">${item.name}</span>
+                    <span style="margin-top: 15px; font-weight: 600; font-size: 0.95rem; word-break: break-word; line-height: 1.3; color: var(--text-color);">${item.name}</span>
                 </div>
             `).join('');
 
@@ -110,50 +109,29 @@ export class DriveController {
             });
 
         } catch (error) {
-            console.error("Error cargando archivos:", error);
-            grid.innerHTML = `<div style="text-align: center; grid-column: 1 / -1; color: #d9534f; padding: 20px;">Error al cargar los recursos. Revisa la consola.</div>`;
+            console.error("Error loading items:", error);
+            grid.innerHTML = `<div style="text-align: center; grid-column: 1 / -1; color: #d9534f; padding: 20px;">Error al cargar. Revisa la consola.</div>`;
         }
     }
 
     async handleNewFolder(container, headerActions) {
         const folderName = prompt("Nombre de la nueva carpeta:");
         if (!folderName || folderName.trim() === '') return;
-
         const parentId = this.currentPath[this.currentPath.length - 1].id;
         const authorId = this.app.currentUser?.id || 'unknown';
-
-        await this.app.db.createDriveItem({
-            name: folderName.trim(),
-            type: 'folder',
-            parentId: parentId,
-            authorId: authorId
-        });
-
+        await this.app.db.createDriveItem({ name: folderName.trim(), type: 'folder', parentId: parentId, authorId: authorId });
         await this.renderDrive(container, headerActions);
     }
 
     async handleAddLink(container, headerActions) {
         const linkName = prompt("Nombre del recurso:");
         if (!linkName || linkName.trim() === '') return;
-
-        let linkUrl = prompt("URL del recurso (ej. https://youtube.com/...):");
+        let linkUrl = prompt("URL del recurso:");
         if (!linkUrl || linkUrl.trim() === '') return;
-
-        if (!linkUrl.startsWith('http://') && !linkUrl.startsWith('https://')) {
-            linkUrl = 'https://' + linkUrl;
-        }
-
+        if (!linkUrl.startsWith('http://') && !linkUrl.startsWith('https://')) linkUrl = 'https://' + linkUrl;
         const parentId = this.currentPath[this.currentPath.length - 1].id;
         const authorId = this.app.currentUser?.id || 'unknown';
-
-        await this.app.db.createDriveItem({
-            name: linkName.trim(),
-            type: 'link',
-            url: linkUrl.trim(),
-            parentId: parentId,
-            authorId: authorId
-        });
-
+        await this.app.db.createDriveItem({ name: linkName.trim(), type: 'link', url: linkUrl.trim(), parentId: parentId, authorId: authorId });
         await this.renderDrive(container, headerActions);
     }
 }
