@@ -8,6 +8,7 @@ import { ChatController } from './controllers/ChatController.js';
 import { ForumController } from './controllers/ForumController.js';
 import { DriveController } from './controllers/DriveController.js';
 import { WikiController } from './controllers/WikiController.js';
+import { BookmarksController } from './controllers/BookmarksController.js';
 
 class App {
     constructor() {
@@ -21,6 +22,7 @@ class App {
         this.forumController = new ForumController(this);
         this.driveController = new DriveController(this);
         this.wikiController = new WikiController(this);
+        this.bookmarksController = new BookmarksController(this);
 
         this.currentUser = null;
         this.currentRole = null;
@@ -82,6 +84,9 @@ class App {
         } else if (view === 'wiki') {
             pageTitle.textContent = 'Wiki Corporativa';
             await this.wikiController.renderWiki(contentArea);
+        } else if (view === 'bookmarks') {
+            pageTitle.textContent = 'Marcadores';
+            await this.bookmarksController.renderBookmarks(contentArea);
         }
     }
 }
