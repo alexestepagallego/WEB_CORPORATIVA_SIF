@@ -17,7 +17,15 @@ export class BookmarksController {
         container.innerHTML = `
             <div class="bookmarks-container">
                 <div class="bookmarks-header">
-                    <input type="text" id="bookmarks-search" placeholder="Buscar por título o etiqueta..." class="login-input" style="max-width:300px; display:inline-block; margin-right:15px;">
+                    <form id="bookmarks-search-form" class="search-container" style="max-width:350px; width:100%; margin-right:15px;" onsubmit="return false;">
+                        <input type="text" id="bookmarks-search" placeholder="Buscar por título o etiqueta..." style="flex:1;">
+                        <button type="submit" id="btn-search-bookmarks" title="Buscar">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </button>
+                    </form>
                     <button class="btn-primary" id="btn-add-bookmark">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 5px;">
                             <path d="M12 5v14M5 12h14"/>
@@ -39,17 +47,21 @@ export class BookmarksController {
             }
         });
 
-        const searchInput = document.getElementById('bookmarks-search');
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                const term = e.target.value.toLowerCase().trim();
+        const searchForm = document.getElementById('bookmarks-search-form');
+        if (searchForm) {
+            searchForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const term = document.getElementById('bookmarks-search').value.toLowerCase().trim();
                 if (!term) {
                     this.renderBookmarksList(this.bookmarks);
                     return;
                 }
                 const filtered = this.bookmarks.filter(b => 
                     b.name.toLowerCase().includes(term) || 
-                    (b.tags && b.tags.some(t => t.toLowerCase().includes(term)))
+                    (b.tags && b.tags.some(t => {
+                        const name = typeof t === 'object' && t !== null ? t.text : String(t);
+                        return name.toLowerCase().includes(term);
+                    }))
                 );
                 this.renderBookmarksList(filtered);
             });
@@ -57,16 +69,20 @@ export class BookmarksController {
     }
 
     extractAllTags() {
-        const tagsSet = new Set();
+        const tagsMap = new Map();
         this.bookmarks.forEach(b => {
             if (b.tags) {
                 b.tags.forEach(t => {
-                    const name = typeof t === 'object' && t !== null ? t.text : String(t);
-                    tagsSet.add(name.trim());
+                    const isObj = typeof t === 'object' && t !== null;
+                    const text = (isObj ? t.text : String(t)).trim();
+                    const theme = isObj ? t.theme : 'tag-blue';
+                    if (!tagsMap.has(text.toLowerCase())) {
+                        tagsMap.set(text.toLowerCase(), { text, theme });
+                    }
                 });
             }
         });
-        this.allTags = Array.from(tagsSet).sort();
+        this.allTags = Array.from(tagsMap.values()).sort((a,b) => a.text.localeCompare(b.text));
     }
 
     renderBookmarksList(bookmarksToRender) {
@@ -183,8 +199,11 @@ export class BookmarksController {
                                 <div id="modal-tags-list" style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom: 1rem;"></div>
                                 
                                 <div id="tag-editor-area" style="display:none; margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border);">
-                                    <input type="text" id="new-tag-text" class="login-input" placeholder="Nombre de etiqueta (ej: Tutorial)" style="margin-bottom:0.75rem;">
-                                    <div style="display:flex; gap:0.5rem; margin-bottom: 0.75rem;" id="tag-color-picker">
+                                    <div style="position:relative;">
+                                        <input type="text" id="new-tag-text" class="login-input" placeholder="Nombre de etiqueta (ej: Tutorial)" autocomplete="off">
+                                        <div id="autocomplete-suggestions" class="autocomplete-suggestions" style="display:none;"></div>
+                                    </div>
+                                    <div style="display:flex; gap:0.5rem; margin-top: 0.75rem; margin-bottom: 0.75rem;" id="tag-color-picker">
                                         <button type="button" class="color-picker-btn tag-blue selected" data-theme="tag-blue"></button>
                                         <button type="button" class="color-picker-btn tag-green" data-theme="tag-green"></button>
                                         <button type="button" class="color-picker-btn tag-red" data-theme="tag-red"></button>
@@ -236,6 +255,7 @@ export class BookmarksController {
         const triggerBtn = document.getElementById('btn-add-tag-trigger');
         const newTagText = document.getElementById('new-tag-text');
         const colorBtns = document.querySelectorAll('#tag-color-picker .color-picker-btn');
+        const suggestionsBox = document.getElementById('autocomplete-suggestions');
 
         const selectColorBtn = (theme) => {
             colorBtns.forEach(btn => btn.classList.remove('selected'));
@@ -243,10 +263,15 @@ export class BookmarksController {
             if (b) b.classList.add('selected');
         };
 
+        const closeSuggestions = () => {
+            if (suggestionsBox) suggestionsBox.style.display = 'none';
+        };
+
         const openTagEditor = (idx = -1) => {
             editingTagIndex = idx;
             tagEditorArea.style.display = 'block';
             triggerBtn.style.display = 'none';
+            closeSuggestions();
             if (idx >= 0) {
                 const t = currentTags[idx];
                 newTagText.value = t.text;
@@ -262,6 +287,7 @@ export class BookmarksController {
             tagEditorArea.style.display = 'none';
             triggerBtn.style.display = 'block';
             editingTagIndex = -1;
+            closeSuggestions();
         };
 
         triggerBtn.addEventListener('click', () => openTagEditor(-1));
@@ -271,6 +297,48 @@ export class BookmarksController {
             btn.addEventListener('click', (e) => {
                 selectColorBtn(e.target.dataset.theme);
             });
+        });
+
+        // Autocomplete logic
+        newTagText.addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase().trim();
+            if (!val) {
+                closeSuggestions();
+                return;
+            }
+            const matches = this.allTags.filter(t => t.text.toLowerCase().includes(val));
+            if (matches.length > 0) {
+                suggestionsBox.innerHTML = matches.map((m) => `
+                    <div class="autocomplete-suggestion" data-text="${this.escapeHtml(m.text)}" data-theme="${m.theme}">
+                        <span class="tag-badge ${m.theme}" style="pointer-events:none;">${this.escapeHtml(m.text)}</span>
+                    </div>
+                `).join('');
+                suggestionsBox.style.display = 'block';
+            } else {
+                closeSuggestions();
+            }
+        });
+
+        suggestionsBox.addEventListener('click', (e) => {
+            const item = e.target.closest('.autocomplete-suggestion');
+            if (item) {
+                const txt = item.dataset.text;
+                const theme = item.dataset.theme;
+                if (editingTagIndex >= 0) {
+                    currentTags[editingTagIndex] = { text: txt, theme };
+                } else {
+                    currentTags.push({ text: txt, theme });
+                }
+                renderModalTags();
+                closeTagEditor();
+            }
+        });
+
+        // Hide suggestions on outside click
+        document.addEventListener('click', (e) => {
+            if (suggestionsBox && suggestionsBox.style.display === 'block' && !e.target.closest('#tag-editor-area')) {
+                closeSuggestions();
+            }
         });
 
         document.getElementById('btn-save-tag').addEventListener('click', () => {
