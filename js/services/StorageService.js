@@ -379,4 +379,31 @@ export class StorageService {
         const docRef = await addDoc(collection(this.db, 'drive_items'), data);
         return docRef.id;
     }
+
+    // --- BOOKMARKS SYSTEM ---
+
+    async getBookmarks(userId) {
+        const q = query(collection(this.db, 'bookmarks'), where('userId', '==', userId));
+        const snapshot = await getDocs(q);
+        const bookmarks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        // Sort locally by creation date descending
+        return bookmarks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+
+    async addBookmark(bookmarkData) {
+        const data = {
+            ...bookmarkData,
+            createdAt: new Date().toISOString()
+        };
+        const docRef = await addDoc(collection(this.db, 'bookmarks'), data);
+        return docRef.id;
+    }
+
+    async updateBookmark(bookmarkId, bookmarkData) {
+        await updateDoc(doc(this.db, 'bookmarks', bookmarkId), bookmarkData);
+    }
+
+    async deleteBookmark(bookmarkId) {
+        await deleteDoc(doc(this.db, 'bookmarks', bookmarkId));
+    }
 }
