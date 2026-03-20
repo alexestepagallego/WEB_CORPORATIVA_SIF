@@ -124,8 +124,14 @@ export class ForumController {
         const topicDate = new Date(topic.createdAt).toLocaleString();
 
         let html = `
-            <div style="background:var(--bg-card); padding:2rem; border-radius:0.5rem; box-shadow:var(--shadow); margin-bottom:1.5rem;">
-                <h3 style="margin-bottom:1rem; color:var(--text-main); font-size:1.6rem;">${topic.title}</h3>
+            <div style="background:var(--bg-card); padding:2rem; border-radius:0.5rem; box-shadow:var(--shadow); margin-bottom:1.5rem; position:relative;">
+                ${this.app.currentRole === 'admin' ? `<button onclick="app.forumController.deleteTopic('${topic.id}')" title="Borrar Tema" style="position:absolute; top:1.5rem; right:1.5rem; background:none; border:none; cursor:pointer; color:var(--danger); padding:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                </button>` : ''}
+                <h3 style="margin-bottom:1rem; color:var(--text-main); font-size:1.6rem; padding-right:2rem;">${topic.title}</h3>
                 <div style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1.5rem; display:flex; gap:1.5rem; align-items:center; border-bottom:1px solid var(--border); padding-bottom:1rem;">
                     <span style="display:flex; align-items:center;">
                         ${authorAvatarHtml}
@@ -186,7 +192,13 @@ export class ForumController {
                 }
 
                 msgsHtml += `
-                    <div style="background:white; padding:1.25rem; border-radius:0.5rem; border:1px solid ${isMyMessage ? 'var(--primary)' : 'var(--border)'}; display:flex; gap:1rem;">
+                    <div style="background:white; padding:1.25rem; border-radius:0.5rem; border:1px solid ${isMyMessage ? 'var(--primary)' : 'var(--border)'}; display:flex; gap:1rem; position:relative;">
+                        ${this.app.currentRole === 'admin' ? `<button onclick="app.forumController.deleteReply('${m.id}')" title="Borrar Respuesta" style="position:absolute; top:1.25rem; right:1.25rem; background:none; border:none; cursor:pointer; color:var(--danger); padding:0;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>` : ''}
                         ${mAvatarHtml}
                         <div style="flex:1;">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
@@ -194,7 +206,7 @@ export class ForumController {
                                     <span style="font-weight:600; font-size:0.95rem; color:var(--text-main);">${mAuthorName}</span> 
                                     <span style="font-size:0.75rem; background:#f1f5f9; padding:0.1rem 0.4rem; border-radius:1rem; margin-left:0.5rem; text-transform:capitalize;">${mAuthorRole}</span>
                                 </div>
-                                <span style="font-size:0.8rem; color:var(--text-muted)">${date}</span>
+                                <span style="font-size:0.8rem; color:var(--text-muted); ${this.app.currentRole === 'admin' ? 'margin-right:2rem;' : ''}">${date}</span>
                             </div>
                             <div style="line-height:1.6; color:#334155; white-space:pre-wrap; font-size:0.95rem;">${m.content}</div>
                         </div>
@@ -298,6 +310,28 @@ export class ForumController {
                 alert("Error al crear el tema: " + e.message);
             }
             if (btn) btn.disabled = false;
+        }
+    }
+
+    async deleteTopic(topicId) {
+        if (!confirm('ATENCIÓN: ¿Estás seguro de que quieres borrar este tema y todas sus respuestas?')) return;
+        try {
+            await this.db.deleteForumTopic(topicId);
+            // After deleting, navigate back to the list
+            this.app.navigate('forum-list');
+        } catch (error) {
+            console.error("Error deleting topic:", error);
+            alert("Error al borrar el tema.");
+        }
+    }
+
+    async deleteReply(messageId) {
+        if (!confirm('¿Estás seguro de que quieres borrar esta respuesta?')) return;
+        try {
+            await this.db.deleteForumMessage(messageId);
+        } catch (error) {
+            console.error("Error deleting reply:", error);
+            alert("Error al borrar la respuesta.");
         }
     }
 }

@@ -4,6 +4,11 @@ export class AdminController {
     }
 
     async renderDashboard(container, actionsContainer) {
+        if (this.app.currentRole !== 'admin') {
+            alert('Acceso Denegado. No tienes permisos de administrador.');
+            await this.app.navigate('global-chat');
+            return;
+        }
         this.container = container;
         this.actionsContainer = actionsContainer;
         await this.refreshView();
@@ -67,11 +72,19 @@ export class AdminController {
                             </div>
                         </div>
                     </td>
-                    <td>${roleText}</td>
+                    <td>
+                        <select class="form-select" style="padding: 0.25rem; font-size: 0.85rem;" onchange="app.adminController.changeUserRole('${user.id}', this.value)">
+                            <option value="employee" ${user.role === 'employee' ? 'selected' : ''}>Empleado</option>
+                            <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Administrador / PM</option>
+                        </select>
+                    </td>
                     <td><span class="status-badge status-assigned">${statusText}</span></td>
                     <td>
-                        <button class="btn btn-outline" onclick="app.adminController.openEditModal('${user.id}')" title="Editar Rol">
-                            ✏️
+                        <button class="btn btn-danger btn-sm" onclick="app.adminController.deleteUser('${user.id}')" title="Expulsar / Eliminar Usuario" style="padding: 0.25rem 0.5rem; background-color: var(--danger); color: white; border: none; border-radius: 4px; cursor: pointer;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg> Expulsar
                         </button>
                     </td>
                 </tr>
@@ -81,53 +94,30 @@ export class AdminController {
         return html;
     }
 
-    async openEditModal(userId) {
-        const users = await this.app.db.getAllUsers();
-        const user = users.find(u => u.id === userId);
-
-        if (!user) return;
-
-        const modalHtml = `
-            <div class="modal-overlay" id="edit-modal" onclick="if(event.target === this) app.adminController.closeModal()">
-                <div class="modal">
-                    <h2>Editar Empleado</h2>
-                    <p>Usuario: <strong>${user.name}</strong></p>
-                    
-                    <div class="form-group">
-                        <label>Rol en la empresa</label>
-                        <select id="user-role-select" class="form-select">
-                            <option value="employee" ${user.role === 'employee' ? 'selected' : ''}>Empleado</option>
-                            <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Administrador / PM</option>
-                        </select>
-                    </div>
-
-                    <div class="modal-actions">
-                        <button class="btn btn-outline" onclick="app.adminController.closeModal()">Cancelar</button>
-                        <button class="btn btn-primary" onclick="app.adminController.saveUserEdit('${userId}')">Guardar</button>
-                    </div>
-                </div>
-            </div>
-        `;
-        document.getElementById('modal-container').innerHTML = modalHtml;
-    }
-
-    async saveUserEdit(userId) {
-        const newRole = document.getElementById('user-role-select').value;
+    async changeUserRole(userId, newRole) {
+        if (!confirm('¿Estás seguro de que quieres cambiar el rol de este usuario?')) return;
         
-        await this.app.db.updateUserProfile(userId, { role: newRole });
+        await this.app.db.updateUserRole(userId, newRole);
         
         // If current user editing themselves, update session
-        if (this.app.currentUser.id === userId) {
+        if (this.app.currentUser && this.app.currentUser.id === userId) {
             this.app.currentRole = newRole;
             this.app.currentUser.role = newRole;
-            this.app.authController.updateUserProfile();
+            if (this.app.authController && this.app.authController.updateUserProfile) {
+                this.app.authController.updateUserProfile();
+            }
         }
 
-        this.closeModal();
         this.refreshView();
     }
 
-    closeModal() {
-        document.getElementById('modal-container').innerHTML = '';
+    async deleteUser(userId) {
+        if (!confirm('ATENCIÓN: ¿Estás seguro de que quieres eliminar a este usuario completamente de la plataforma? Esta acción no se puede deshacer.')) return;
+        
+        await this.app.db.deleteUser(userId);
+        
+        // If they delete themselves (edge case) we might want to log them out,
+        // but typically they don't do that.
+        this.refreshView();
     }
 }

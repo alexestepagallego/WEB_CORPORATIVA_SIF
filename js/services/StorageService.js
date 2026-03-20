@@ -63,6 +63,14 @@ export class StorageService {
         return { id: updatedDoc.id, ...updatedDoc.data() };
     }
 
+    async updateUserRole(userId, newRole) {
+        await updateDoc(doc(this.db, 'usuarios', userId), { role: newRole });
+    }
+
+    async deleteUser(userId) {
+        await deleteDoc(doc(this.db, 'usuarios', userId));
+    }
+
     // --- GLOBAL CHAT SYSTEM ---
     async addGlobalMessage(msgData) {
         const id = 'gmsg_' + Date.now();
@@ -76,6 +84,10 @@ export class StorageService {
             const msgs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             callback(msgs);
         });
+    }
+
+    async deleteChatMessage(id) {
+        await deleteDoc(doc(this.db, 'globalMessages', id));
     }
 
     // --- SOCIAL NETWORK SYSTEM ---
@@ -177,6 +189,10 @@ export class StorageService {
         return hydrated[0];
     }
 
+    async deletePost(id) {
+        await deleteDoc(doc(this.db, 'posts', id));
+    }
+
     // --- FORUM SYSTEM ---
 
     async subscribeToForumTopics(callback) {
@@ -234,6 +250,21 @@ export class StorageService {
                 replyCount: count
             });
         }
+    }
+
+    async deleteForumTopic(topicId) {
+        // Delete all messages associated with this topic first
+        const msgsQuery = query(collection(this.db, 'forum_messages'), where('topicId', '==', topicId));
+        const msgsSnap = await getDocs(msgsQuery);
+        const deletePromises = msgsSnap.docs.map(mDoc => deleteDoc(doc(this.db, 'forum_messages', mDoc.id)));
+        await Promise.all(deletePromises);
+
+        // Delete the topic itself
+        await deleteDoc(doc(this.db, 'forum_topics', topicId));
+    }
+
+    async deleteForumMessage(messageId) {
+        await deleteDoc(doc(this.db, 'forum_messages', messageId));
     }
 
     // --- DRIVE SYSTEM ---
