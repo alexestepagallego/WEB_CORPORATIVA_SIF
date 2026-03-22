@@ -7,7 +7,7 @@ export class WikiController {
         container.innerHTML = `
             <style>
                 .wiki-base {
-                    font-family: 'Open Sans', system-ui, sans-serif;
+                    font-family: 'Inter', 'Open Sans', system-ui, sans-serif;
                     background-color: transparent;
                     color: #1e293b;
                     padding: 0 1rem 2rem 1rem;
@@ -107,9 +107,9 @@ export class WikiController {
                 }
 
                 /* Typography */
-                .wiki-title { margin-top: 0; color: #0f172a; font-size: 2rem; font-weight: 700; }
+                .wiki-title { margin-top: 0; color: #0f172a; font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; }
                 .wiki-subtitle { color: #64748b; font-size: 1.1rem; margin-bottom: 2rem; }
-                .wiki-h3 { color: #0f172a; font-size: 1.25rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.5rem; }
+                .wiki-h3 { color: #0f172a; font-size: 1.25rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.5rem; letter-spacing: -0.01em; }
 
                 /* Grids & Cards */
                 .wiki-grid {
@@ -128,13 +128,13 @@ export class WikiController {
                     border: 1px solid #e2e8f0;
                     padding: 1.5rem;
                     border-radius: 12px;
-                    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+                    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.02);
                     transition: transform 0.2s, box-shadow 0.2s;
                     display: flex;
                     flex-direction: column;
                 }
                 .wiki-card:hover {
-                    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.08);
+                    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
                     transform: translateY(-2px);
                 }
                 .wiki-card-header {
@@ -217,7 +217,7 @@ export class WikiController {
                 
                 .wiki-intro-block {
                     font-size: 1.1rem; color: #334155; line-height: 1.7; padding: 1.5rem;
-                    background-color: #f8fafc; border-left: 4px solid #3b82f6; border-radius: 0 8px 8px 0;
+                    background-color: #f8fafc; border-left: 4px solid #3b82f6; border-radius: 8px;
                     margin-bottom: 2rem;
                 }
 
