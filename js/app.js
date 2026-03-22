@@ -1,26 +1,24 @@
 import { StorageService } from './services/StorageService.js';
 import { AuthController } from './controllers/AuthController.js';
 import { AdminController } from './controllers/AdminController.js';
-import { TutorController } from './controllers/TutorController.js';
-import { StudentController } from './controllers/StudentController.js';
 import { SocialNetworkController } from './controllers/SocialNetworkController.js';
 import { ChatController } from './controllers/ChatController.js';
 import { ForumController } from './controllers/ForumController.js';
 import { DriveController } from './controllers/DriveController.js';
 import { WikiController } from './controllers/WikiController.js';
+import { BookmarksController } from './controllers/BookmarksController.js';
 
 class App {
     constructor() {
         this.db = new StorageService();
         this.authController = new AuthController(this);
         this.adminController = new AdminController(this);
-        this.tutorController = new TutorController(this);
-        this.studentController = new StudentController(this);
         this.socialNetworkController = new SocialNetworkController(this);
         this.chatController = new ChatController(this);
         this.forumController = new ForumController(this);
         this.driveController = new DriveController(this);
         this.wikiController = new WikiController(this);
+        this.bookmarksController = new BookmarksController(this);
 
         this.currentUser = null;
         this.currentRole = null;
@@ -45,22 +43,13 @@ class App {
         if (activeNav) activeNav.classList.add('active');
 
         if (view === 'admin-dashboard') {
-            pageTitle.textContent = 'Gestión de Alumnos';
+            pageTitle.textContent = 'Directorio de Empleados';
             await this.adminController.renderDashboard(contentArea, headerActions);
         } else if (view === 'global-chat') {
             pageTitle.textContent = 'Chat Global';
             await this.chatController.renderGlobalChat(contentArea);
-        } else if (view === 'tutor-history') {
-            pageTitle.textContent = 'Historial de Reuniones';
-            await this.tutorController.renderHistory(contentArea);
-        } else if (view === 'tutor-alerts') {
-            pageTitle.textContent = 'Gestión de Alertas';
-            await this.tutorController.renderAlerts(contentArea);
-        } else if (view === 'student-alerts') {
-            pageTitle.textContent = 'Mis Alertas';
-            await this.studentController.renderAlertsHistory(contentArea);
         } else if (view === 'social-network') {
-            pageTitle.textContent = 'Red Social';
+            pageTitle.textContent = 'Red Social Corporativa';
             await this.socialNetworkController.renderSocialNetwork(contentArea);
         } else if (view === 'profile') {
             pageTitle.textContent = 'Perfil de Usuario';
@@ -82,6 +71,9 @@ class App {
         } else if (view === 'wiki') {
             pageTitle.textContent = 'Wiki Corporativa';
             await this.wikiController.renderWiki(contentArea);
+        } else if (view === 'bookmarks') {
+            pageTitle.textContent = 'Marcadores';
+            await this.bookmarksController.renderBookmarks(contentArea);
         }
     }
 }

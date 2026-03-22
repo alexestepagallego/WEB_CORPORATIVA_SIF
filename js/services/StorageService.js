@@ -29,21 +29,6 @@ export class StorageService {
         this.storage = storage;
     }
 
-    async getStudents() {
-        const snapshot = await getDocs(collection(this.db, 'students'));
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    }
-
-    async getTutors() {
-        const snapshot = await getDocs(collection(this.db, 'tutors'));
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    }
-
-    async getAdmins() {
-        const snapshot = await getDocs(collection(this.db, 'admins'));
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    }
-
     async getAllUsers() {
         const snapshot = await getDocs(collection(this.db, 'usuarios'));
         return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -63,43 +48,27 @@ export class StorageService {
         return null;
     }
 
-    async updateStudent(student) {
-        await updateDoc(doc(this.db, 'students', student.id), student);
-        await updateDoc(doc(this.db, 'usuarios', student.id), student);
-    }
-
-    async addStudent(student) {
-        const id = student.id || `student_${Date.now()}`;
-        student.id = id;
-        await setDoc(doc(this.db, 'students', id), student);
-        await setDoc(doc(this.db, 'usuarios', id), student);
-    }
-
     async saveUser(user, role) {
-        if (!user.id) user.id = `${role}_${Date.now()}`;
+        if (!user.id) user.id = `user_${Date.now()}`;
         const id = user.id;
-
-        if (role === 'student') await setDoc(doc(this.db, 'students', id), user);
-        else if (role === 'tutor') await setDoc(doc(this.db, 'tutors', id), user);
-        else if (role === 'admin') await setDoc(doc(this.db, 'admins', id), user);
 
         await setDoc(doc(this.db, 'usuarios', id), user);
     }
 
     async updateUserProfile(userId, profileData) {
-        // Fetch current user logic since it can be any role.
-        const userDoc = await getDoc(doc(this.db, 'usuarios', userId));
-        if (userDoc.exists()) {
-            const role = userDoc.data().role;
-            if (role === 'student') await updateDoc(doc(this.db, 'students', userId), profileData);
-            else if (role === 'tutor') await updateDoc(doc(this.db, 'tutors', userId), profileData);
-            else if (role === 'admin') await updateDoc(doc(this.db, 'admins', userId), profileData);
-        }
         await updateDoc(doc(this.db, 'usuarios', userId), profileData);
         
         // Return updated user
         const updatedDoc = await getDoc(doc(this.db, 'usuarios', userId));
         return { id: updatedDoc.id, ...updatedDoc.data() };
+    }
+
+    async updateUserRole(userId, newRole) {
+        await updateDoc(doc(this.db, 'usuarios', userId), { role: newRole });
+    }
+
+    async deleteUser(userId) {
+        await deleteDoc(doc(this.db, 'usuarios', userId));
     }
 
     // --- GLOBAL CHAT SYSTEM ---
@@ -117,84 +86,8 @@ export class StorageService {
         });
     }
 
-    async getChatMessages(studentId, tutorId) {
-        const q = query(collection(this.db, 'messages'), where('studentId', '==', studentId), where('tutorId', '==', tutorId));
-        const snap = await getDocs(q);
-        return snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
-    }
-
-    async subscribeToChatMessages(studentId, tutorId, callback) {
-        const q = query(collection(this.db, 'messages'), where('studentId', '==', studentId), where('tutorId', '==', tutorId));
-        return onSnapshot(q, (snapshot) => {
-            const msgs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
-            callback(msgs);
-        });
-    }
-
-    async addChatMessage(msg) {
-        const id = 'msg_' + Date.now() + Math.random().toString(36).substr(2, 5);
-        msg.id = id;
-        await setDoc(doc(this.db, 'messages', id), msg);
-    }
-
-    async getMeetings() {
-        const snapshot = await getDocs(collection(this.db, 'meetings'));
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    }
-
-    // --- ALERTS SYSTEM ---
-
-    async sendAlert(alertData) {
-        const id = 'alert_' + Date.now();
-        const data = {
-            ...alertData,
-            id: id,
-            fecha: new Date().toISOString(),
-            vistoPor: [],
-            borradoPor: []
-        };
-        await setDoc(doc(this.db, 'alertas', id), data);
-    }
-
-    async subscribeToTutorAlerts(tutorId, callback) {
-        const q = query(collection(this.db, 'alertas'), where('tutorId', '==', tutorId));
-        return onSnapshot(q, (snapshot) => {
-            let alerts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            alerts = alerts.filter(a => !a.borradoPor || !a.borradoPor.includes(tutorId));
-            alerts.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-            callback(alerts);
-        });
-    }
-
-    async subscribeToStudentAlerts(studentId, assignedTutorId, callback) {
-        const q = query(collection(this.db, 'alertas'), where('tutorId', '==', assignedTutorId));
-        return onSnapshot(q, (snapshot) => {
-            let alerts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            alerts = alerts.filter(a => {
-                if (a.borradoPor && a.borradoPor.includes(studentId)) return false;
-                if (a.destinatarios === 'TODOS') return true;
-                if (Array.isArray(a.destinatarios) && a.destinatarios.includes(studentId)) return true;
-                return false;
-            });
-            alerts.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-            callback(alerts);
-        });
-    }
-
-    async deleteAlert(alertId, userId, forEveryone = false) {
-        if (forEveryone) {
-            await deleteDoc(doc(this.db, 'alertas', alertId));
-        } else {
-            await updateDoc(doc(this.db, 'alertas', alertId), {
-                borradoPor: arrayUnion(userId)
-            });
-        }
-    }
-
-    async markAlertAsSeen(alertId, studentId) {
-        await updateDoc(doc(this.db, 'alertas', alertId), {
-            vistoPor: arrayUnion(studentId)
-        });
+    async deleteChatMessage(id) {
+        await deleteDoc(doc(this.db, 'globalMessages', id));
     }
 
     // --- SOCIAL NETWORK SYSTEM ---
@@ -240,7 +133,7 @@ export class StorageService {
             } else {
                 post.authorName = 'Usuario Desconocido';
                 post.authorAvatarBase64 = null;
-                post.authorRole = 'student';
+                post.authorRole = 'employee';
             }
 
             if (post.comments) {
@@ -253,7 +146,7 @@ export class StorageService {
                     } else {
                         comment.authorName = 'Usuario Desconocido';
                         comment.authorAvatarBase64 = null;
-                        comment.authorRole = 'student';
+                        comment.authorRole = 'employee';
                     }
                     return comment;
                 });
@@ -294,6 +187,10 @@ export class StorageService {
         if (!postSnap.exists()) return null;
         const hydrated = await this._hydratePosts([{ id: postSnap.id, ...postSnap.data() }]);
         return hydrated[0];
+    }
+
+    async deletePost(id) {
+        await deleteDoc(doc(this.db, 'posts', id));
     }
 
     // --- FORUM SYSTEM ---
@@ -355,6 +252,21 @@ export class StorageService {
         }
     }
 
+    async deleteForumTopic(topicId) {
+        // Delete all messages associated with this topic first
+        const msgsQuery = query(collection(this.db, 'forum_messages'), where('topicId', '==', topicId));
+        const msgsSnap = await getDocs(msgsQuery);
+        const deletePromises = msgsSnap.docs.map(mDoc => deleteDoc(doc(this.db, 'forum_messages', mDoc.id)));
+        await Promise.all(deletePromises);
+
+        // Delete the topic itself
+        await deleteDoc(doc(this.db, 'forum_topics', topicId));
+    }
+
+    async deleteForumMessage(messageId) {
+        await deleteDoc(doc(this.db, 'forum_messages', messageId));
+    }
+
     // --- DRIVE SYSTEM ---
 
     async uploadDriveFile(file) {
@@ -378,5 +290,32 @@ export class StorageService {
         };
         const docRef = await addDoc(collection(this.db, 'drive_items'), data);
         return docRef.id;
+    }
+
+    // --- BOOKMARKS SYSTEM ---
+
+    async getBookmarks(userId) {
+        const q = query(collection(this.db, 'bookmarks'), where('userId', '==', userId));
+        const snapshot = await getDocs(q);
+        const bookmarks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        // Sort locally by creation date descending
+        return bookmarks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+
+    async addBookmark(bookmarkData) {
+        const data = {
+            ...bookmarkData,
+            createdAt: new Date().toISOString()
+        };
+        const docRef = await addDoc(collection(this.db, 'bookmarks'), data);
+        return docRef.id;
+    }
+
+    async updateBookmark(bookmarkId, bookmarkData) {
+        await updateDoc(doc(this.db, 'bookmarks', bookmarkId), bookmarkData);
+    }
+
+    async deleteBookmark(bookmarkId) {
+        await deleteDoc(doc(this.db, 'bookmarks', bookmarkId));
     }
 }

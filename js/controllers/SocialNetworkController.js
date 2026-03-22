@@ -287,6 +287,12 @@ export class SocialNetworkController {
                     <a onclick="app.navigate('profile', '${post.authorId}')" class="link-unstyled"><div class="post-author">${post.authorName}</div></a>
                     <div class="post-subtitle">${displayRole} • ${dateStr}</div>
                 </div>
+                ${this.app.currentRole === 'admin' ? `<button onclick="app.socialNetworkController.deletePost('${post.id}')" title="Borrar Publicación" style="margin-left:auto; background:none; border:none; cursor:pointer; color:var(--danger);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                </button>` : ''}
             </div>
             <div class="post-content">
                 <p>${this.escapeHtml(post.content)}</p>
@@ -388,6 +394,16 @@ export class SocialNetworkController {
 
         } catch (error) {
             console.error("Error sharing post:", error);
+        }
+    }
+
+    async deletePost(postId) {
+        if (!confirm('¿Estás seguro de que quieres borrar esta publicación? Esta acción no se puede deshacer.')) return;
+        try {
+            await this.app.db.deletePost(postId);
+        } catch (error) {
+            console.error("Error deleting post:", error);
+            alert("Error al borrar la publicación.");
         }
     }
 

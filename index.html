@@ -20,25 +20,20 @@
     <div id="login-view">
         <!-- Login Form Screen -->
         <div id="login-form" class="login-card">
-            <div class="logos">
-                <div class="logo-placeholder">
-                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
-                        style="width:60px; height:60px;">
-                        <circle cx="50" cy="50" r="45" stroke="#eab308" stroke-width="5" stroke-dasharray="10 5" />
-                        <circle cx="50" cy="50" r="25" fill="#eab308" />
+            <div class="brand-container" style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:60px; height:60px;">
+                        <polygon points="50,5 93.3,30 93.3,70 50,95" fill="var(--verde-codigo)" />
+                        <polygon points="50,5 6.7,30 6.7,70 50,95" fill="var(--azul-claridad)" />
+                        <circle cx="50" cy="50" r="15" stroke="white" stroke-width="4" fill="none"/>
+                        <path d="M50 35 L50 15 M50 65 L50 85 M35 50 L15 50 M65 50 L85 50" stroke="white" stroke-width="4" stroke-linecap="round"/>
                     </svg>
                 </div>
-                <div class="logo-placeholder">
-                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
-                        style="width:60px; height:60px;">
-                        <rect x="20" y="20" width="60" height="60" rx="10" fill="#f97316" />
-                        <path d="M30 50 L50 70 L70 30" stroke="white" stroke-width="10" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
+                <div class="brand-text" style="display: flex; flex-direction: column; align-items: flex-start;">
+                    <h1 class="brand-title" style="font-family: 'Open Sans', sans-serif; font-size: 2rem; color: var(--azul-claridad); margin: 0; font-weight: 700; line-height: 1.1; text-transform: uppercase;">CLEAR CODE</h1>
+                    <p class="brand-slogan" style="font-size: 0.75rem; color: var(--gris-servicio); font-weight: 600; letter-spacing: 0.5px; margin: 0; margin-top: 2px; text-transform: uppercase;">SOLUCIONES TECNOLÓGICAS INNOVADORAS</p>
                 </div>
             </div>
-            <h1 class="brand-title">SGT DEV</h1>
-            <p class="brand-subtitle">COOPERATIVE SOFTWARE PLATFORM</p>
 
             <div class="form-group">
                 <input type="text" id="username-input" class="login-input" placeholder="Nombre de usuario o Email">
@@ -63,156 +58,72 @@
     <!-- MAIN APP LAYOUT (Hidden by default) -->
     <div id="app" class="hidden">
         <aside class="sidebar">
-            <div class="sidebar-header">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 10v6M2 10v6" />
-                    <path d="M20 2a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" />
-                    <path d="M7 22v-8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v8" />
-                </svg>
-                SGT Product Manager
+            <div class="sidebar-header" style="flex-direction: column; align-items: flex-start; padding: 1.5rem 1rem;">
+                <div class="brand-container" style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:36px; height:36px;">
+                            <polygon points="50,5 93.3,30 93.3,70 50,95" fill="var(--verde-codigo)" />
+                            <polygon points="50,5 6.7,30 6.7,70 50,95" fill="#ffffff" />
+                            <circle cx="50" cy="50" r="15" stroke="white" stroke-width="4" fill="none"/>
+                            <path d="M50 35 L50 15 M50 65 L50 85 M35 50 L15 50 M65 50 L85 50" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="brand-text" style="display: flex; flex-direction: column; align-items: flex-start;">
+                        <span class="brand-title" style="font-family: 'Inter', sans-serif; font-size: 1.1rem; color: #ffffff; margin: 0; font-weight: 700; line-height: 1.1; text-transform: uppercase;">CLEAR CODE</span>
+                        <span class="brand-slogan" style="font-size: 0.55rem; color: #cbd5e1; font-weight: 600; letter-spacing: 0.5px; margin: 0; margin-top: 2px; text-transform: uppercase;">SOLUCIONES TECNOLÓGICAS INNOVADORAS</span>
+                    </div>
+                </div>
             </div>
-            <nav class="sidebar-nav" id="admin-nav">
-                <div class="nav-item active" onclick="app.navigate('admin-dashboard')">
+            <nav class="sidebar-nav" id="main-nav">
+                <div class="nav-item active" onclick="app.navigate('global-chat')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                    Chat Global
+                </div>
+                <div class="nav-item" onclick="app.navigate('social-network')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 16v-4" />
+                        <path d="M12 8h.01" />
+                        <path d="M18 12c0 3.314-2.686 6-6 6S6 15.314 6 12s2.686-6 6-6 6 2.686 6 6z" />
+                        <path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z" />
+                    </svg>
+                    Red Social Corporativa
+                </div>
+                <div class="nav-item" onclick="app.navigate('forum-list')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    Foro
+                </div>
+                <div class="nav-item" onclick="app.navigate('recursos')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    Drive Compartido
+                </div>
+                <div class="nav-item" onclick="app.navigate('wiki')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    Wiki Interna
+                </div>
+                <div class="nav-item" onclick="app.navigate('bookmarks')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    Marcadores
+                </div>
+                <div class="nav-item" onclick="app.navigate('admin-dashboard')">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="3" width="7" height="7" />
                         <rect x="14" y="3" width="7" height="7" />
                         <rect x="14" y="14" width="7" height="7" />
                         <rect x="3" y="14" width="7" height="7" />
                     </svg>
-                    Dashboard
-                </div>
-                <div class="nav-item" onclick="app.navigate('global-chat')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                    </svg>
-                    Chat Global
-                </div>
-                <div class="nav-item" onclick="app.navigate('social-network')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 16v-4" />
-                        <path d="M12 8h.01" />
-                        <path d="M18 12c0 3.314-2.686 6-6 6S6 15.314 6 12s2.686-6 6-6 6 2.686 6 6z" />
-                        <path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z" />
-                    </svg>
-                    Red Social
-                </div>
-                <div class="nav-item" onclick="app.navigate('forum-list')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                    </svg>
-                    Foro
-                </div>
-                <div class="nav-item" onclick="app.navigate('recursos')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                    Recursos
-                </div>
-                <div class="nav-item" onclick="app.navigate('wiki')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                    </svg>
-                    Wiki
-                </div>
-            </nav>
-            <nav class="sidebar-nav hidden" id="tutor-nav">
-                <div class="nav-item active" onclick="app.navigate('global-chat')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                    </svg>
-                    Chat Global
-                </div>
-                <div class="nav-item" onclick="app.navigate('tutor-alerts')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path
-                            d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                        <line x1="12" y1="9" x2="12" y2="13" />
-                        <line x1="12" y1="17" x2="12.01" y2="17" />
-                    </svg>
-                    Gestión de Incidencias
-                </div>
-                <div class="nav-item" onclick="app.navigate('tutor-history')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10" />
-                        <polyline points="12 6 12 12 16 14" />
-                    </svg>
-                    Historial de Sprints
-                </div>
-                <div class="nav-item" onclick="app.navigate('social-network')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 16v-4" />
-                        <path d="M12 8h.01" />
-                        <path d="M18 12c0 3.314-2.686 6-6 6S6 15.314 6 12s2.686-6 6-6 6 2.686 6 6z" />
-                        <path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z" />
-                    </svg>
-                    Red Social
-                </div>
-                <div class="nav-item" onclick="app.navigate('forum-list')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                    </svg>
-                    Foro
-                </div>
-                <div class="nav-item" onclick="app.navigate('recursos')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                    Recursos
-                </div>
-                <div class="nav-item" onclick="app.navigate('wiki')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                    </svg>
-                    Wiki
-                </div>
-            </nav>
-            <nav class="sidebar-nav hidden" id="student-nav">
-                <div class="nav-item active" onclick="app.navigate('global-chat')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                    </svg>
-                    Chat Global
-                </div>
-                <div class="nav-item" onclick="app.navigate('student-alerts')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-                    </svg>
-                    Mis Incidencias
-                </div>
-                <div class="nav-item" onclick="app.navigate('social-network')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 16v-4" />
-                        <path d="M12 8h.01" />
-                        <path d="M18 12c0 3.314-2.686 6-6 6S6 15.314 6 12s2.686-6 6-6 6 2.686 6 6z" />
-                        <path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z" />
-                    </svg>
-                    Red Social
-                </div>
-                <div class="nav-item" onclick="app.navigate('forum-list')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                    </svg>
-                    Foro
-                </div>
-                <div class="nav-item" onclick="app.navigate('recursos')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                    Recursos
-                </div>
-                <div class="nav-item" onclick="app.navigate('wiki')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                    </svg>
-                    Wiki
+                    Directorio
                 </div>
             </nav>
             <div class="user-profile">
@@ -247,9 +158,6 @@
 
     <!-- MODAL CONTAINER -->
     <div id="modal-container"></div>
-    <!-- ALERT CONTAINER -->
-    <div id="alert-container"></div>
-
 
     <!-- SCRIPTS -->
     <script type="module" src="js/app.js"></script>

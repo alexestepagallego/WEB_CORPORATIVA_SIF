@@ -61,7 +61,18 @@ export class ChatController {
                         authorNameHtml = `<div style="font-size: 0.75rem; font-weight: bold; margin-bottom: 4px; color: var(--primary-dark);">${msg.authorName}</div>`;
                     }
 
+                    let deleteBtnHtml = '';
+                    if (this.app.currentRole === 'admin') {
+                        deleteBtnHtml = `<button onclick="app.chatController.deleteMessage('${msg.id}')" title="Borrar Mensaje" style="background:none; border:none; cursor:pointer; color:var(--danger); padding:0; margin-left:8px; float:right;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>`;
+                    }
+
                     div.innerHTML = `
+                        ${deleteBtnHtml}
                         ${authorNameHtml}
                         ${msg.text}
                         <span class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
@@ -104,6 +115,15 @@ export class ChatController {
             input.disabled = false;
             document.getElementById('send-btn').disabled = false;
             input.focus();
+        }
+    }
+
+    async deleteMessage(id) {
+        if (!confirm('¿Estás seguro de que quieres borrar este mensaje?')) return;
+        try {
+            await this.app.db.deleteChatMessage(id);
+        } catch (error) {
+            console.error("Error deleting message", error);
         }
     }
 }
