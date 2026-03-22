@@ -274,7 +274,7 @@ export class WikiController {
                 <!-- Global Header -->
                 <div class="wiki-global-header">
                     <h1 class="wiki-global-title">Clear Code Wiki</h1>
-                    <a href="#" class="wiki-btn-primary">
+                    <a href="./manual-corporativo.pdf" download="Manual_Corporativo_Clear_Code.pdf" class="wiki-btn-primary">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                             <polyline points="7 10 12 15 17 10"></polyline>
