@@ -286,7 +286,7 @@ export class WikiController {
 
                 <!-- Navigation -->
                 <nav class="wiki-nav">
-                    <button class="wiki-tab active" data-target="wiki-tab-1">Manuales de Bienvenida</button>
+                    <button class="wiki-tab active" data-target="wiki-tab-1">Manual de Bienvenida (Onboarding)</button>
                     <button class="wiki-tab" data-target="wiki-tab-2">Políticas de la Empresa</button>
                     <button class="wiki-tab" data-target="wiki-tab-3">Doc Técnica y Proyectos</button>
                     <button class="wiki-tab" data-target="wiki-tab-4">Características Clave</button>
@@ -295,10 +295,13 @@ export class WikiController {
 
                 <div class="wiki-content">
                     
-                    <!-- TAB 1: Manuales de Bienvenida -->
+                    <!-- TAB 1: Manual de Bienvenida -->
                     <div id="wiki-tab-1" class="wiki-section">
-                        <h2 class="wiki-title">Manuales de Bienvenida (Onboarding)</h2>
-                        <div class="wiki-subtitle">Elaborado por: Dario Acosta Sanchez</div>
+                        <h2 class="wiki-title">Manual de Bienvenida (Onboarding)</h2>
+                        <div class="wiki-subtitle" style="display: flex; align-items: center; gap: 0.75rem;">
+                            <span class="wiki-badge" style="background: #e0f2fe; color: #0284c7; padding: 0.35rem 0.75rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:2px; vertical-align:-2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>Documento Oficial</span>
+                            <span>Guía oficial de integración y cultura corporativa de Clear Code</span>
+                        </div>
 
                         <div class="wiki-intro-block">
                             <strong>Bienvenido a Clear Code.</strong> Este manual ha sido diseñado para acompañarte en tus primeros días, ayudarte a comprender cómo trabajamos y facilitarte una integración rápida, cómoda y clara en tu nuevo entorno de excelencia técnica.
