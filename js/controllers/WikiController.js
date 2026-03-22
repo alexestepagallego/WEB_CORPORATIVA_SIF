@@ -274,7 +274,7 @@ export class WikiController {
                 <!-- Global Header -->
                 <div class="wiki-global-header">
                     <h1 class="wiki-global-title">Clear Code Wiki</h1>
-                    <a href="./manual-corporativo.pdf" download="Manual_Corporativo_Clear_Code.pdf" class="wiki-btn-primary">
+                    <a href="./manual_coporativo_cc.pdf" download="Manual_Corporativo_Clear_Code.pdf" class="wiki-btn-primary">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                             <polyline points="7 10 12 15 17 10"></polyline>
@@ -596,81 +596,81 @@ export class WikiController {
                         <div class="wiki-subtitle">Stack de herramientas avalado corporativamente</div>
 
                         <div class="wiki-grid">
-                            <!-- Confluence -->
+                            <!-- Trello -->
                             <div class="wiki-software-card">
                                 <div class="wiki-software-header">
-                                    <h3 class="wiki-software-title">Confluence</h3>
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                    <h3 class="wiki-software-title">Trello</h3>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="9"></rect><rect x="14" y="7" width="3" height="5"></rect></svg>
                                 </div>
-                                <p class="wiki-card-text">Estándar oro para documentación técnica conectada al ecosistema Atlassian.</p>
+                                <p class="wiki-card-text">Herramienta visual de gestión de proyectos basada en tableros.</p>
                                 <div class="wiki-software-features">
-                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-pro">Pro</span> Integración total con Jira y DevOps, ricas plantillas.</div>
-                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Enterprise-level costoso, curva de aprendizaje moderada.</div>
+                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-pro">Pro</span> Gestión visual intuitiva (Kanban), ideal para seguimiento de tareas rápidas, curva de aprendizaje nula.</div>
+                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Limitado para proyectos de ingeniería muy complejos, pocas funcionalidades nativas de reporte avanzado.</div>
                                 </div>
                             </div>
 
-                            <!-- Notion -->
+                            <!-- GitHub -->
                             <div class="wiki-software-card">
                                 <div class="wiki-software-header">
-                                    <h3 class="wiki-software-title">Notion</h3>
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e293b" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                                    <h3 class="wiki-software-title">GitHub</h3>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e293b" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
                                 </div>
-                                <p class="wiki-card-text">Espacio de trabajo moderno, visual y extraordinariamente flexible basado en bloques.</p>
+                                <p class="wiki-card-text">Plataforma de desarrollo colaborativo y control de versiones distribuido.</p>
                                 <div class="wiki-software-features">
-                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-pro">Pro</span> Altamente flexible, bases de datos integradas, UX excelente.</div>
-                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Permisos granulares complejos, propenso al desorden sin control.</div>
+                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-pro">Pro</span> Estándar de la industria, potentes flujos de CI/CD (GitHub Actions), ecosistema inmenso de integraciones.</div>
+                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Gestión de permisos compleja en organizaciones grandes, coste elevado en planes Enterprise.</div>
                                 </div>
                             </div>
 
-                            <!-- MediaWiki -->
+                            <!-- Tailscale -->
                             <div class="wiki-software-card">
                                 <div class="wiki-software-header">
-                                    <h3 class="wiki-software-title">MediaWiki</h3>
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                    <h3 class="wiki-software-title">Tailscale</h3>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>
                                 </div>
-                                <p class="wiki-card-text">Plataforma robusta y probada a escala global (motor detrás de Wikipedia).</p>
+                                <p class="wiki-card-text">VPN moderna y red mesh construida sobre el protocolo WireGuard.</p>
                                 <div class="wiki-software-features">
-                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-pro">Pro</span> Open source gratuito, altamente escalable, potente historial.</div>
-                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Interfaz legacy antigua, requiere administración técnica activa.</div>
+                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-pro">Pro</span> Configuración de VPN Zero-Config, red mesh segura para equipos remotos, gran facilidad de uso.</div>
+                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Dependencia de un proveedor externo, puede presentar latencia en configuraciones muy específicas.</div>
                                 </div>
                             </div>
 
-                            <!-- DokuWiki -->
+                            <!-- Google Cloud -->
                             <div class="wiki-software-card">
                                 <div class="wiki-software-header">
-                                    <h3 class="wiki-software-title">DokuWiki</h3>
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                    <h3 class="wiki-software-title">Google Cloud (GCP)</h3>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
                                 </div>
-                                <p class="wiki-card-text">Wiki sencilla y ágil que no requiere base de datos (basada puramente en TXT).</p>
+                                <p class="wiki-card-text">Plataforma integral de servicios de computación en la nube pública.</p>
                                 <div class="wiki-software-features">
-                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-pro">Pro</span> Sistema muy ligero, fácil backup, ideal para PYMES o proyectos.</div>
-                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Funcionalidad limitada comparado a Enterprise, UI básica.</div>
+                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-pro">Pro</span> Infraestructura global de alto rendimiento, herramientas de Datos y AI líderes (BigQuery/VertexAI), escalabilidad masiva.</div>
+                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Curva de aprendizaje técnica elevada, facturación compleja si no se monitoriza correctamente.</div>
                                 </div>
                             </div>
 
-                            <!-- SharePoint -->
+                            <!-- Firebase -->
                             <div class="wiki-software-card">
                                 <div class="wiki-software-header">
-                                    <h3 class="wiki-software-title">SharePoint</h3>
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                    <h3 class="wiki-software-title">Firebase</h3>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
                                 </div>
-                                <p class="wiki-card-text">La solución nativa del ecosistema corporativo Microsoft 365.</p>
+                                <p class="wiki-card-text">Plataforma de desarrollo en la nube para crear aplicaciones web y móviles.</p>
                                 <div class="wiki-software-features">
-                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-pro">Pro</span> Perfecta integración Microsoft, control documental superior, seguridad.</div>
-                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Altamente complejo de configurar bien, costoso para equipos.</div>
+                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-pro">Pro</span> Desarrollo ultra rápido (Real-time DB), hosting y autenticación integrados, ideal para MVPs y apps móviles.</div>
+                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Riesgo de "vendor lock-in", los costes pueden escalar muy rápido con un volumen de datos alto.</div>
                                 </div>
                             </div>
 
-                            <!-- GitBook -->
+                            <!-- Antigravity -->
                             <div class="wiki-software-card">
                                 <div class="wiki-software-header">
-                                    <h3 class="wiki-software-title">GitBook</h3>
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                    <h3 class="wiki-software-title">Antigravity (IA Assistant)</h3>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                                 </div>
-                                <p class="wiki-card-text">Plataforma moderna centrada en la documentación basada en control de versiones.</p>
+                                <p class="wiki-card-text">Asistente de inteligencia artificial avanzado para desarrolladores.</p>
                                 <div class="wiki-software-features">
-                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-pro">Pro</span> Soporte Markdown nativo, sincro en Git bidireccional, ideal para Devs.</div>
-                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Interfaz menos amigable o intuitiva para perfiles no técnicos (Marketing/HR).</div>
+                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-pro">Pro</span> Aceleración drástica del desarrollo frontend, generación de código limpio y profesional, soporte en tiempo real.</div>
+                                    <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Requiere supervisión humana constante, dependiente de la claridad de los prompts de entrada.</div>
                                 </div>
                             </div>
 
