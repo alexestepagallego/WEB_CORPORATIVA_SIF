@@ -335,14 +335,14 @@ export class WikiController {
                             <div class="wiki-accordion-item">
                                 <button class="wiki-accordion-header">
                                     <div class="wiki-accordion-header-left">
-                                        <div class="wiki-dept-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></div>
+                                        <div class="wiki-dept-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
                                         Departamento de Documentación
                                     </div>
                                     <svg class="wiki-accordion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                 </button>
                                 <div class="wiki-accordion-content">
                                     <div class="wiki-accordion-content-inner">
-                                        Este equipo se encarga de elaborar, mantener y actualizar toda la documentación técnica y funcional en Clear Code. Su labor garantiza que los procesos, arquitecturas y entregables cuenten con información precisa y accesible.
+                                        Este equipo se encarga de elaborar, mantener y actualizar toda la documentación técnica y funcional relacionada con nuestros proyectos. Su labor garantiza que los procesos, desarrollos y entregables cuenten con información clara, precisa y accesible, facilitando tanto el trabajo interno como la comprensión por parte de los clientes.
                                     </div>
                                 </div>
                             </div>
@@ -351,30 +351,62 @@ export class WikiController {
                             <div class="wiki-accordion-item">
                                 <button class="wiki-accordion-header">
                                     <div class="wiki-accordion-header-left">
-                                        <div class="wiki-dept-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
+                                        <div class="wiki-dept-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg></div>
                                         Departamento de Implementación
                                     </div>
                                     <svg class="wiki-accordion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                 </button>
                                 <div class="wiki-accordion-content">
                                     <div class="wiki-accordion-content-inner">
-                                        Responsable de los pipelines de integración continua (CI/CD) y despliegues en infraestructura Cloud, garantizando cero downtime y transiciones impecables hacia entornos de producción.
+                                        Responsable de llevar a cabo la puesta en marcha de las soluciones desarrolladas, este departamento trabaja directamente con los clientes para asegurar una integración correcta y eficiente de los sistemas. Su función incluye configuraciones, despliegues, pruebas en entorno real y acompañamiento durante las fases iniciales de uso.
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Desarrollo -->
+                            <!-- Investigación -->
                             <div class="wiki-accordion-item">
                                 <button class="wiki-accordion-header">
                                     <div class="wiki-accordion-header-left">
-                                        <div class="wiki-dept-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div>
-                                        Engineering & Product
+                                        <div class="wiki-dept-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H15"></path><path d="M10 9H14"></path><path d="M3 19V21H21V19"></path><path d="M14 3v8l5 8v2H5v-2l5-8V3"></path></svg></div>
+                                        Departamento de Investigación
                                     </div>
                                     <svg class="wiki-accordion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                 </button>
                                 <div class="wiki-accordion-content">
                                     <div class="wiki-accordion-content-inner">
-                                        El núcleo técnico. Aquí desarrollamos soluciones altamente escalables aplicando patrones de diseño empresariales, TDD y revisiones de código exhaustivas para mantener nuestros estándares en lo más alto.
+                                        Dedicado a la exploración de nuevas tecnologías, metodologías y tendencias del sector, este departamento impulsa la innovación dentro de la empresa. Su objetivo es identificar oportunidades de mejora, evaluar herramientas emergentes y proponer soluciones que mantengan a la organización a la vanguardia del desarrollo tecnológico.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RRHH y Redes Sociales -->
+                            <div class="wiki-accordion-item">
+                                <button class="wiki-accordion-header">
+                                    <div class="wiki-accordion-header-left">
+                                        <div class="wiki-dept-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+                                        Departamento de Recursos Humanos y Redes Sociales (RRSS)
+                                    </div>
+                                    <svg class="wiki-accordion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                                <div class="wiki-accordion-content">
+                                    <div class="wiki-accordion-content-inner">
+                                        Este departamento gestiona los procesos de selección, formación, bienestar y desarrollo profesional del equipo. Además, se encarga de la comunicación externa a través de redes sociales y otros canales corporativos, fortaleciendo la imagen de la empresa y promoviendo su cultura y valores.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Desarrollo y Creatividad -->
+                            <div class="wiki-accordion-item">
+                                <button class="wiki-accordion-header">
+                                    <div class="wiki-accordion-header-left">
+                                        <div class="wiki-dept-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div>
+                                        Departamento de Desarrollo y Creatividad
+                                    </div>
+                                    <svg class="wiki-accordion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                                <div class="wiki-accordion-content">
+                                    <div class="wiki-accordion-content-inner">
+                                        Es el núcleo técnico y creativo de la empresa. Aquí se diseñan, desarrollan y optimizan las soluciones de software que ofrecemos. El equipo combina conocimientos técnicos con pensamiento innovador para crear productos funcionales, escalables y alineados con las necesidades de los clientes. Su labor incluye programación, diseño de interfaces, arquitectura de software y generación de nuevas ideas que aporten valor.
                                     </div>
                                 </div>
                             </div>
@@ -660,13 +692,13 @@ export class WikiController {
             tab.addEventListener('click', () => {
                 // Remove active class from tabs
                 tabs.forEach(t => t.classList.remove('active'));
-                
+
                 // Hide and reset animation for all sections
                 sections.forEach(s => {
                     s.style.display = 'none';
                     s.style.animation = 'none';
                     s.offsetHeight; /* trigger reflow */
-                    s.style.animation = null; 
+                    s.style.animation = null;
                 });
 
                 // Set active tab and show section
@@ -682,11 +714,11 @@ export class WikiController {
 
         // Accordion functionality
         const accordionHeaders = container.querySelectorAll('.wiki-accordion-header');
-        
+
         accordionHeaders.forEach(header => {
             header.addEventListener('click', () => {
                 const item = header.parentElement;
-                
+
                 // Close others
                 const allItems = container.querySelectorAll('.wiki-accordion-item');
                 allItems.forEach(i => {
