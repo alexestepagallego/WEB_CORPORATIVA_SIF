@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clear Code - Plataforma de Desarrollo Cooperativo</title>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,9 +15,18 @@
 
 <body>
 
-    <!-- LOGIN VIEW -->
-    <div id="login-view">
-        <!-- Login Form Screen -->
+    <div id="landing-view" style="position: relative; width: 100vw; height: 100vh; overflow: hidden; background-color: #000;">
+        <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.70/build/spline-viewer.js"></script>
+        
+        <spline-viewer url="https://prod.spline.design/GHaRQVb9TBbSm-wK/scene.splinecode" style="width: 100%; height: 100%;"></spline-viewer>
+
+        <button onclick="mostrarLogin()" 
+                style="position: absolute; top: 30px; right: 40px; z-index: 10; padding: 12px 28px; background-color: var(--verde-codigo, #10b981); color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; font-family: 'Open Sans', sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;">
+            Iniciar sesión
+        </button>
+    </div>
+
+    <div id="login-view" style="display: none; width: 100vw; height: 100vh; align-items: center; justify-content: center; background-color: var(--fondo-app);">
         <div id="login-form" class="login-card">
             <div class="brand-container" style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
                 <div class="logo-icon">
@@ -55,7 +63,6 @@
         </div>
     </div>
 
-    <!-- MAIN APP LAYOUT (Hidden by default) -->
     <div id="app" class="hidden">
         <aside class="sidebar">
             <div class="sidebar-header" style="flex-direction: column; align-items: flex-start; padding: 1.5rem 1rem;">
@@ -151,15 +158,21 @@
             </header>
 
             <div id="content-area" class="view-content">
-                <!-- Dynamic Content Loaded Here -->
-            </div>
+                </div>
         </main>
     </div>
 
-    <!-- MODAL CONTAINER -->
     <div id="modal-container"></div>
 
-    <!-- SCRIPTS -->
+    <script>
+        function mostrarLogin() {
+            // Esconde la escena 3D
+            document.getElementById('landing-view').style.display = 'none';
+            // Muestra el login. Le pongo flex para que se mantenga centrado en la pantalla
+            document.getElementById('login-view').style.display = 'flex';
+        }
+    </script>
+
     <script type="module" src="js/app.js"></script>
 </body>
 
