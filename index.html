@@ -11,14 +11,44 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        /* Evitamos poner el hidden al body global para no romper el scroll del resto de la app, 
+           así que se lo aplicamos directamente al contenedor de la landing */
+        #landing-view {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .fondo-3d {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1; /* Fondo del landing, pero detrás del botón */
+        }
+
+        spline-viewer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 
 <body>
 
-    <div id="landing-view" style="position: relative; width: 100vw; height: 100vh; overflow: hidden; background-color: #000;">
+    <div id="landing-view">
         <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.70/build/spline-viewer.js"></script>
         
-        <spline-viewer  url="https://prod.spline.design/GHaRQVb9TBbSm-wK/scene.splinecode" style="width: 100%; height: 100%;"></spline-viewer>
+        <div class="fondo-3d">
+            <spline-viewer url="https://prod.spline.design/GHaRQVb9TBbSm-wK/scene.splinecode"></spline-viewer>
+        </div>
 
         <button onclick="mostrarLogin()" 
                 style="position: absolute; top: 30px; right: 40px; z-index: 10; padding: 12px 28px; background-color: var(--verde-codigo, #10b981); color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; font-family: 'Open Sans', sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;">
