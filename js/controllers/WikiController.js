@@ -271,6 +271,7 @@ export class WikiController {
             </style>
 
             <div class="wiki-base">
+                <!-- Global Header -->
                 <div class="wiki-global-header">
                     <h1 class="wiki-global-title">Clear Code Wiki</h1>
                     <a href="./manual-corporativo_cc.pdf" download="Manual_Corporativo_Clear_Code.pdf" class="wiki-btn-primary">
@@ -283,6 +284,7 @@ export class WikiController {
                     </a>
                 </div>
 
+                <!-- Navigation -->
                 <nav class="wiki-nav">
                     <button class="wiki-tab active" data-target="wiki-tab-1">Manual de Bienvenida</button>
                     <button class="wiki-tab" data-target="wiki-tab-2">Políticas de la Empresa</button>
@@ -293,6 +295,7 @@ export class WikiController {
 
                 <div class="wiki-content">
                     
+                    <!-- TAB 1: Manual de Bienvenida -->
                     <div id="wiki-tab-1" class="wiki-section">
                         <h2 class="wiki-title">Manual de Bienvenida</h2>
                         <div class="wiki-subtitle">Guía oficial de integración y cultura corporativa de Clear Code.</div>
@@ -328,6 +331,7 @@ export class WikiController {
 
                         <h3 class="wiki-h3">Estructura Departamental</h3>
                         <div class="wiki-accordion">
+                            <!-- Documentación -->
                             <div class="wiki-accordion-item">
                                 <button class="wiki-accordion-header">
                                     <div class="wiki-accordion-header-left">
@@ -343,6 +347,7 @@ export class WikiController {
                                 </div>
                             </div>
                             
+                            <!-- Implementación -->
                             <div class="wiki-accordion-item">
                                 <button class="wiki-accordion-header">
                                     <div class="wiki-accordion-header-left">
@@ -358,6 +363,7 @@ export class WikiController {
                                 </div>
                             </div>
 
+                            <!-- Investigación -->
                             <div class="wiki-accordion-item">
                                 <button class="wiki-accordion-header">
                                     <div class="wiki-accordion-header-left">
@@ -373,6 +379,7 @@ export class WikiController {
                                 </div>
                             </div>
 
+                            <!-- RRHH y Redes Sociales -->
                             <div class="wiki-accordion-item">
                                 <button class="wiki-accordion-header">
                                     <div class="wiki-accordion-header-left">
@@ -388,6 +395,7 @@ export class WikiController {
                                 </div>
                             </div>
 
+                            <!-- Desarrollo y Creatividad -->
                             <div class="wiki-accordion-item">
                                 <button class="wiki-accordion-header">
                                     <div class="wiki-accordion-header-left">
@@ -405,6 +413,7 @@ export class WikiController {
                         </div>
                     </div>
 
+                    <!-- TAB 2: Políticas -->
                     <div id="wiki-tab-2" class="wiki-section" style="display: none;">
                         <h2 class="wiki-title">Políticas Corporativas</h2>
                         <div class="wiki-subtitle">Normativas y directrices operativas</div>
@@ -414,6 +423,7 @@ export class WikiController {
                         </div>
 
                         <div class="wiki-grid">
+                            <!-- Tarjeta 1 -->
                             <div class="wiki-card">
                                 <div class="wiki-card-header">
                                     <div class="wiki-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
@@ -422,6 +432,7 @@ export class WikiController {
                                 <p class="wiki-card-text">Solicitud vía sistema interno con <strong>15 días de antelación</strong>. Sujeta a aprobación del responsable directo para asegurar la continuidad de los Sprints.</p>
                             </div>
                             
+                            <!-- Tarjeta 2 -->
                             <div class="wiki-card">
                                 <div class="wiki-card-header">
                                     <div class="wiki-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
@@ -430,6 +441,7 @@ export class WikiController {
                                 <p class="wiki-card-text">Justificación obligatoria con tickets originales. Subida al sistema interno de ERP para su validación, revisión por finanzas y reembolso mensual.</p>
                             </div>
 
+                            <!-- Tarjeta 3 -->
                             <div class="wiki-card">
                                 <div class="wiki-card-header">
                                     <div class="wiki-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
@@ -438,6 +450,7 @@ export class WikiController {
                                 <p class="wiki-card-text">Uso estricto de <strong>2FA (Autenticación de Dos Factores)</strong>. Prohibido compartir credenciales. Cierre de sesión en equipos compartidos y evitar redes Wi-Fi públicas no cifradas.</p>
                             </div>
 
+                            <!-- Tarjeta 4 -->
                             <div class="wiki-card">
                                 <div class="wiki-card-header">
                                     <div class="wiki-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
@@ -446,6 +459,7 @@ export class WikiController {
                                 <p class="wiki-card-text">Uso exclusivo laboral de los equipos suministrados. Prohibido alterar datos sin autorización. Reporte inmediato de incidencias o vulnerabilidades a soporte IT.</p>
                             </div>
 
+                            <!-- Tarjeta 5 -->
                             <div class="wiki-card">
                                 <div class="wiki-card-header">
                                     <div class="wiki-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
@@ -456,6 +470,7 @@ export class WikiController {
                         </div>
                     </div>
 
+                    <!-- TAB 3: Doc Técnica -->
                     <div id="wiki-tab-3" class="wiki-section" style="display: none;">
                         <h2 class="wiki-title">Documentación Técnica y de Proyectos</h2>
                         <div class="wiki-subtitle">Estándares y flujos operativos de desarrollo</div>
@@ -515,6 +530,7 @@ export class WikiController {
                         </div>
                     </div>
 
+                    <!-- TAB 4: Dashboard Wiki -->
                     <div id="wiki-tab-4" class="wiki-section" style="display: none;">
                         <h2 class="wiki-title">Características Clave de la Wiki</h2>
                         <div class="wiki-subtitle">Visión analítica y estructura arquitectónica</div>
@@ -574,11 +590,13 @@ export class WikiController {
                         </div>
                     </div>
 
+                    <!-- TAB 5: Software -->
                     <div id="wiki-tab-5" class="wiki-section" style="display: none;">
                         <h2 class="wiki-title">Recomendaciones de Software</h2>
                         <div class="wiki-subtitle">Stack de herramientas avalado corporativamente</div>
 
                         <div class="wiki-grid">
+                            <!-- Trello -->
                             <div class="wiki-software-card">
                                 <div class="wiki-software-header">
                                     <h3 class="wiki-software-title">Trello</h3>
@@ -591,6 +609,7 @@ export class WikiController {
                                 </div>
                             </div>
 
+                            <!-- GitHub -->
                             <div class="wiki-software-card">
                                 <div class="wiki-software-header">
                                     <h3 class="wiki-software-title">GitHub</h3>
@@ -603,6 +622,7 @@ export class WikiController {
                                 </div>
                             </div>
 
+                            <!-- Tailscale -->
                             <div class="wiki-software-card">
                                 <div class="wiki-software-header">
                                     <h3 class="wiki-software-title">Tailscale</h3>
@@ -615,6 +635,7 @@ export class WikiController {
                                 </div>
                             </div>
 
+                            <!-- Google Cloud -->
                             <div class="wiki-software-card">
                                 <div class="wiki-software-header">
                                     <h3 class="wiki-software-title">Google Cloud (GCP)</h3>
@@ -627,6 +648,7 @@ export class WikiController {
                                 </div>
                             </div>
 
+                            <!-- Firebase -->
                             <div class="wiki-software-card">
                                 <div class="wiki-software-header">
                                     <h3 class="wiki-software-title">Firebase</h3>
@@ -639,6 +661,7 @@ export class WikiController {
                                 </div>
                             </div>
 
+                            <!-- Antigravity -->
                             <div class="wiki-software-card">
                                 <div class="wiki-software-header">
                                     <h3 class="wiki-software-title">Antigravity (IA Assistant)</h3>
@@ -650,7 +673,6 @@ export class WikiController {
                                     <div class="wiki-feature"><span class="wiki-badge wiki-badge-con">Contra</span> Requiere supervisión humana constante, dependiente de la claridad de los prompts de entrada.</div>
                                 </div>
                             </div>
-
                         </div>
                         
                         <hr style="margin: 3rem 0; border: 1px solid #e2e8f0;">
@@ -691,7 +713,7 @@ export class WikiController {
                                 </tbody>
                             </table>
                         </div>
-                        </div>
+                    </div>
 
                 </div>
             </div>
