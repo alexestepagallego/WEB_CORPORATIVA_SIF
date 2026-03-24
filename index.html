@@ -55,8 +55,14 @@
     </div>
     </div>
 
-    <div id="login-view" style="display: none; width: 100vw; height: 100vh; align-items: center; justify-content: center; background-color: var(--fondo-app);">
-        <div id="login-form" class="login-card">
+    <div id="login-view" style="display: none; position: relative; width: 100vw; height: 100vh; align-items: center; justify-content: center; overflow: hidden; background-color: #000;">
+        
+        <div style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0;">
+            <iframe src="TU_NUEVO_ENLACE_AQUI" frameborder="0" width="100%" height="100%" style="border:none;"></iframe>
+        </div>
+
+        <div id="login-form" class="login-card" style="position: relative; z-index: 10; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            
             <div class="brand-container" style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
                 <div class="logo-icon">
                     <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:60px; height:60px;">
@@ -90,8 +96,7 @@
                 <span>Aviso de Cookies</span>
             </div>
         </div>
-    </div>
-
+    
     <div id="app" class="hidden">
         <aside class="sidebar">
             <div class="sidebar-header" style="flex-direction: column; align-items: flex-start; padding: 1.5rem 1rem;">
