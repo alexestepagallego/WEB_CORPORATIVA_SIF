@@ -268,6 +268,17 @@ export class WikiController {
                     .wiki-grid-2x2 { grid-template-columns: 1fr; }
                     .wiki-columns { flex-direction: column; }
                 }
+                /* Estilo para los botones de exportar */
+.dt-buttons { margin-bottom: 1.5rem; }
+.dt-button {
+    background: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    padding: 0.4rem 0.8rem !important;
+    cursor: pointer !important;
+}
             </style>
 
             <div class="wiki-base">
@@ -575,17 +586,17 @@ export class WikiController {
                                 <h3 class="wiki-h3" style="margin-top:0;">Jerarquía y Normativa Documental</h3>
                                 <p style="color:#475569; margin-bottom: 1rem;">La documentación oficial exige el uso de tipografía <strong>Arial 12pt</strong> y una jerarquía decimal coherente mostrada a continuación:</p>
                                 
-                                <div class="wiki-code-block">
-# Estructura de Documento [Draft]
-1. Arquitectura Base
-  1.1. Capa de Presentación
-    1.1.1. Componentes Reutilizables
-    1.1.2. Gestión de Estados (Redux/Context)
-  1.2. Capa de Servicios
-    1.2.1. Adaptadores REST
-2. Despliegue Cloud
-  2.1. Entorno de Staging
-                                </div>
+      <div style="background: #2d2d2d; border-radius: 8px; overflow: hidden; margin-top: 1rem;">
+    <pre class="language-javascript"><code class="language-javascript">
+// Estructura de Documento [Enterprise Standard]
+const wikiConfig = {
+    id: "CC-2024",
+    hierarchy: "Decimal",
+    audit: "90 days",
+    sections: ["Bienvenida", "Políticas", "Técnica"]
+};
+    </code></pre>
+</div>
                             </div>
                         </div>
                     </div>
@@ -787,12 +798,17 @@ export class WikiController {
                         $('#tabla-documentos').DataTable().destroy();
                     }
                     $('#tabla-documentos').DataTable({
+                        dom: 'Bfrtip', // Esta línea "mágica" es la que hace aparecer los botones
+                        buttons: ['copy', 'excel', 'pdf', 'print'],
                         "language": {
                             "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
                         },
-                        "pageLength": 5,
-                        "lengthMenu": [5, 10, 25]
+                        "pageLength": 5
                     });
+                }
+                // Activar los colores del código (Prism.js)
+                if (window.Prism) {
+                    Prism.highlightAllUnder(container);
                 }
             }
         }, 100);
