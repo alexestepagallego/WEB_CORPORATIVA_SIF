@@ -13,8 +13,6 @@
     <link rel="stylesheet" href="css/styles.css">
 
     <style>
-        /* Evitamos poner el hidden al body global para no romper el scroll del resto de la app, 
-           así que se lo aplicamos directamente al contenedor de la landing */
         #landing-view {
             position: relative;
             width: 100vw;
@@ -31,7 +29,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 1; /* Fondo del landing, pero detrás del botón */
+            z-index: 1;
         }
 
         spline-viewer {
@@ -44,15 +42,14 @@
 <body>
 
    <div id="landing-view">
-        
         <div class="fondo-3d">
            <iframe src='https://my.spline.design/reededliquidglassprismherosectionconcept-gT1YBuTtCNa3LGg0vqxjD9mv/' frameborder='0' width='100%' height='100%'></iframe>
 
-       <button onclick="mostrarLogin()" 
-        style="position: absolute; top: 58%; left: 35%; transform: translateX(-50%); z-index: 10; padding: 14px 32px; background-color: var(--verde-codigo, #10b981); color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 1.1rem; cursor: pointer; font-family: 'Open Sans', sans-serif; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.2s ease;">
-    Iniciar sesión
-</button>
-    </div>
+           <button onclick="mostrarLogin()" 
+                   style="position: absolute; top: 58%; left: 35%; transform: translateX(-50%); z-index: 10; padding: 14px 32px; background-color: var(--verde-codigo, #10b981); color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 1.1rem; cursor: pointer; font-family: 'Open Sans', sans-serif; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.2s ease;">
+               Iniciar sesión
+           </button>
+        </div>
     </div>
 
     <div id="login-view" style="display: none; position: relative; width: 100vw; height: 100vh; align-items: center; justify-content: center; overflow: hidden; background-color: #000;">
@@ -96,8 +93,7 @@
                 <span>Aviso de Cookies</span>
             </div>
         </div>
-    
-    <div id="app" class="hidden">
+    </div> <div id="app" class="hidden">
         <aside class="sidebar">
             <div class="sidebar-header" style="flex-direction: column; align-items: flex-start; padding: 1.5rem 1rem;">
                 <div class="brand-container" style="display: flex; align-items: center; gap: 0.75rem;">
@@ -192,7 +188,7 @@
             </header>
 
             <div id="content-area" class="view-content">
-                </div>
+            </div>
         </main>
     </div>
 
@@ -200,9 +196,9 @@
 
     <script>
         function mostrarLogin() {
-            // Esconde la escena 3D
+            // Esconde la escena 3D de la landing
             document.getElementById('landing-view').style.display = 'none';
-            // Muestra el login. Le pongo flex para que se mantenga centrado en la pantalla
+            // Muestra el login
             document.getElementById('login-view').style.display = 'flex';
         }
     </script>
