@@ -1,6 +1,27 @@
 export class AuthController {
     constructor(app) {
         this.app = app;
+        this.setupEnterListeners();
+    }
+
+    setupEnterListeners() {
+        const handleEnter = (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.login();
+            }
+        };
+        
+        const usernameInput = document.getElementById('username-input');
+        const passwordInput = document.getElementById('password-input');
+        
+        if (usernameInput) {
+            usernameInput.addEventListener('keypress', handleEnter);
+        }
+        
+        if (passwordInput) {
+            passwordInput.addEventListener('keypress', handleEnter);
+        }
     }
 
     async login() {
