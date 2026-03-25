@@ -95,6 +95,61 @@ class App {
             `;
             return;
         }
+        else if (view === 'estadisticas') {
+            pageTitle.textContent = 'Estadísticas de la Empresa';
+            if (headerActions) headerActions.innerHTML = '';
+            
+            // 1. Creamos la estructura HTML con los "lienzos" (canvas) para las gráficas
+            contentArea.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; padding: 1rem;">
+                    <!-- Gráfica de Barras -->
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                        <h3 style="margin-bottom: 1rem; color: #1e293b; font-family: 'Inter', sans-serif; font-size: 1.1rem;">Tareas Completadas por Dpto.</h3>
+                        <canvas id="barChart"></canvas>
+                    </div>
+                    
+                    <!-- Gráfica Circular (Doughnut) -->
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                        <h3 style="margin-bottom: 1rem; color: #1e293b; font-family: 'Inter', sans-serif; font-size: 1.1rem;">Estado del Servidor</h3>
+                        <canvas id="doughnutChart"></canvas>
+                    </div>
+                </div>
+            `;
+
+            // 2. Esperamos un microsegundo a que el HTML exista, y dibujamos las gráficas
+            setTimeout(() => {
+                // Configuración de la gráfica de barras
+                const ctxBar = document.getElementById('barChart').getContext('2d');
+                new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Frontend', 'Backend', 'Sistemas', 'Diseño'],
+                        datasets: [{
+                            label: 'Tareas resueltas',
+                            data: [15, 22, 8, 12],
+                            backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6'],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: { responsive: true }
+                });
+
+                // Configuración de la gráfica circular
+                const ctxDoughnut = document.getElementById('doughnutChart').getContext('2d');
+                new Chart(ctxDoughnut, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Operativo', 'Mantenimiento', 'Caído'],
+                        datasets: [{
+                            data: [85, 10, 5],
+                            backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: { responsive: true, cutout: '70%' }
+                });
+            }, 100); // El timeout es clave para que no dé error
+        }
     }
 }
 
