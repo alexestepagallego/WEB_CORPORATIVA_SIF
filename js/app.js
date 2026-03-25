@@ -75,6 +75,15 @@ class App {
             pageTitle.textContent = 'Marcadores';
             await this.bookmarksController.renderBookmarks(contentArea);
         }
+        else if (view === 'trello-board') {
+            document.getElementById('page-title').innerText = 'Gestión de Tareas';
+            document.getElementById('content-area').innerHTML = `
+                <div style="width: 100%; height: 100%; overflow: hidden; border-radius: 8px; background: white;">
+                    <iframe src="https://trello.com/b/DQEASsvq/dpto-implementacion-y-codigo.html" frameborder="0" width="100%" height="100%" style="min-height: 700px; border: none;"></iframe>
+                </div>
+            `;
+            return; // o 'break;' si estás usando un switch
+        }
     }
 }
 
