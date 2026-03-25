@@ -74,41 +74,34 @@ class App {
         } else if (view === 'bookmarks') {
             pageTitle.textContent = 'Marcadores';
             await this.bookmarksController.renderBookmarks(contentArea);
-        }
-        else if (view === 'trello-board') {
-            document.getElementById('page-title').innerText = 'Gestión de Tareas';
-            document.getElementById('content-area').innerHTML = `
+            
+        } else if (view === 'trello-board') {
+            pageTitle.textContent = 'Gestión de Tareas';
+            if (headerActions) headerActions.innerHTML = '';
+            
+            contentArea.innerHTML = `
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-align: center; padding: 2rem;">
-                    
-                    <!-- Icono de Trello -->
                     <svg viewBox="0 0 24 24" style="width: 80px; height: 80px; color: #0052CC; margin-bottom: 1.5rem;" fill="currentColor">
                         <path d="M19 3H5C3.895 3 3 3.895 3 5V19C3 20.105 3.895 21 5 21H19C20.105 21 21 20.105 21 19V5C21 3.895 20.105 3 19 3ZM10 17C10 17.552 9.552 18 9 18H6C5.448 18 5 17.552 5 17V6C5 5.448 5.448 5 6 5H9C9.552 5 10 5.448 10 6V17ZM19 12C19 12.552 18.552 13 18 13H15C14.448 13 14 12.552 14 12V6C14 5.448 14.448 5 15 5H18C18.552 5 19 5.448 19 6V12Z"></path>
                     </svg>
-                    
                     <h2 style="color: #172b4d; font-size: 1.8rem; margin-bottom: 0.5rem; font-family: 'Inter', sans-serif;">Tablero: Dpto. Implementación</h2>
-                    <p style="color: #5e6c84; max-width: 500px; margin-bottom: 2.5rem; line-height: 1.6;">Por políticas de seguridad de Atlassian (restricciones de iframe), la vista interactiva está aislada. Accede al espacio de trabajo seguro haciendo clic abajo.</p>
-                    
+                    <p style="color: #5e6c84; max-width: 500px; margin-bottom: 2.5rem; line-height: 1.6;">Por políticas de seguridad de Atlassian, la vista interactiva está aislada. Accede al espacio de trabajo seguro haciendo clic abajo.</p>
                     <a href="https://trello.com/b/DQEASsvq/dpto-implementacion-y-codigo" target="_blank" style="background-color: #0052CC; color: white; padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                         Abrir Tablero en Trello
                     </a>
                 </div>
             `;
-            return;
-        }
-        else if (view === 'estadisticas') {
+            
+        } else if (view === 'estadisticas') {
             pageTitle.textContent = 'Estadísticas de la Empresa';
             if (headerActions) headerActions.innerHTML = '';
             
-            // 1. Creamos la estructura HTML con los "lienzos" (canvas) para las gráficas
             contentArea.innerHTML = `
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; padding: 1rem;">
-                    <!-- Gráfica de Barras -->
                     <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
                         <h3 style="margin-bottom: 1rem; color: #1e293b; font-family: 'Inter', sans-serif; font-size: 1.1rem;">Tareas Completadas por Dpto.</h3>
                         <canvas id="barChart"></canvas>
                     </div>
-                    
-                    <!-- Gráfica Circular (Doughnut) -->
                     <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
                         <h3 style="margin-bottom: 1rem; color: #1e293b; font-family: 'Inter', sans-serif; font-size: 1.1rem;">Estado del Servidor</h3>
                         <canvas id="doughnutChart"></canvas>
@@ -116,9 +109,13 @@ class App {
                 </div>
             `;
 
-            // 2. Esperamos un microsegundo a que el HTML exista, y dibujamos las gráficas
             setTimeout(() => {
-                // Configuración de la gráfica de barras
+                // Pequeño chivato por si falta el script en el HTML
+                if (typeof Chart === 'undefined') {
+                    alert("¡Te falta poner el <script> de Chart.js en tu index.html!");
+                    return;
+                }
+                
                 const ctxBar = document.getElementById('barChart').getContext('2d');
                 new Chart(ctxBar, {
                     type: 'bar',
@@ -134,7 +131,6 @@ class App {
                     options: { responsive: true }
                 });
 
-                // Configuración de la gráfica circular
                 const ctxDoughnut = document.getElementById('doughnutChart').getContext('2d');
                 new Chart(ctxDoughnut, {
                     type: 'doughnut',
@@ -148,11 +144,10 @@ class App {
                     },
                     options: { responsive: true, cutout: '70%' }
                 });
-            }, 100); // El timeout es clave para que no dé error
+            }, 100); 
         }
     }
 }
 
-// Initialize App
 const app = new App();
 window.app = app;
