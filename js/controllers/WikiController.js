@@ -285,14 +285,22 @@ export class WikiController {
                 <!-- Global Header -->
                 <div class="wiki-global-header">
                     <h1 class="wiki-global-title">Clear Code Wiki</h1>
-                    <a href="./manual-corporativo_cc.pdf" download="Manual_Corporativo_Clear_Code.pdf" class="wiki-btn-primary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        Descargar Manual Corporativo (PDF)
-                    </a>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <a href="http://100.100.195.39/dokuwiki/doku.php?id=start" target="_blank" class="wiki-btn-primary" style="background-color: #10b981; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line>
+                            </svg>
+                            Abrir DokuWiki (Intranet Completa)
+                        </a>
+                        <a href="./manual-corporativo_cc.pdf" download="Manual_Corporativo_Clear_Code.pdf" class="wiki-btn-primary">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Descargar Manual Corporativo (PDF)
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Navigation -->
@@ -422,6 +430,15 @@ export class WikiController {
                                 </div>
                             </div>
                         </div>
+
+                        <div style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+                            <a href="http://100.100.195.39/dokuwiki/doku.php?id=rrhh:manual_bienvenida" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Leer / Editar documento oficial en DokuWiki
+                            </a>
+                        </div>
                     </div>
 
                     <!-- TAB 2: Políticas -->
@@ -478,6 +495,15 @@ export class WikiController {
                                 </div>
                                 <p class="wiki-card-text">Fomento absoluto del respeto, puntualidad a las dailys, ética, honestidad y estricta confidencialidad de la información interna y código fuente.</p>
                             </div>
+                        </div>
+
+                        <div style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+                            <a href="http://100.100.195.39/dokuwiki/doku.php?id=rrhh:politicas_empresa" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Leer / Editar documento oficial en DokuWiki
+                            </a>
                         </div>
                     </div>
 
@@ -539,6 +565,15 @@ export class WikiController {
                                 </div>
                             </div>
                         </div>
+
+                        <div style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+                            <a href="http://100.100.195.39/dokuwiki/doku.php?id=ingenieria:doc_tecnica_proyectos" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Leer / Editar documento oficial en DokuWiki
+                            </a>
+                        </div>
                     </div>
 
                     <!-- TAB 4: Dashboard Wiki -->
@@ -598,6 +633,15 @@ const wikiConfig = {
     </code></pre>
 </div>
                             </div>
+                        </div>
+
+                        <div style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+                            <a href="http://100.100.195.39/dokuwiki/doku.php?id=ingenieria:caracteristicas_clave" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Leer / Editar documento oficial en DokuWiki
+                            </a>
                         </div>
                     </div>
 
@@ -687,42 +731,70 @@ const wikiConfig = {
                         </div>
                         
                         <hr style="margin: 3rem 0; border: 1px solid #e2e8f0;">
-                        <h3 class="wiki-h3" style="margin-top:0;">Editor Colaborativo</h3>
-                        <div class="wiki-intro-block" style="background-color: #f0fdf4; border-left-color: #10b981;">
-                            Usa este editor para redactar nuevas políticas. El contenido usa <strong>Quill.js</strong> para edición enriquecida.
+                        <h3 class="wiki-h3" style="margin-top:0;">Bloc de Notas / Borrador Rápido</h3>
+                        <div class="wiki-intro-block" style="background-color: #f8fafc; border-left-color: #64748b; font-size: 0.95rem; color: #475569; padding: 1rem; margin-bottom: 2rem;">
+                            Utiliza este espacio para maquetar tus ideas con formato antes de copiarlas a la Wiki oficial.
                         </div>
                         
                         <div id="editor-wiki" style="height: 250px; background: white; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
                             <p>Escribe el contenido técnico aquí (usa tipografía Arial)...</p>
                         </div>
-                        <button class="wiki-btn-primary" style="margin-bottom: 3rem;">Guardar en Base de Datos</button>
+                        <button class="wiki-btn-primary" style="margin-bottom: 3rem;">Copiar al portapapeles</button>
 
                         <h3 class="wiki-h3">Directorio de Documentos Oficiales</h3>
                         <div style="background: white; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0;">
                             <table id="tabla-documentos" class="display" style="width:100%; text-align: left;">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Documento</th>
+                                        <th>Sección</th>
+                                        <th>Documento / ID</th>
                                         <th>Departamento</th>
-                                        <th>Estado</th>
+                                        <th>Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>1.1</td>
                                         <td>Manual de Bienvenida</td>
-                                        <td>Operations</td>
-                                        <td><span class="wiki-badge wiki-badge-pro">Vigente</span></td>
+                                        <td><code>rrhh:manual_bienvenida</code></td>
+                                        <td>RRHH / Operations</td>
+                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=rrhh:manual_bienvenida" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none;">Abrir en DokuWiki</a></td>
                                     </tr>
                                     <tr>
-                                        <td>2.1</td>
-                                        <td>Protocolo de Seguridad</td>
+                                        <td>Políticas Corporativas</td>
+                                        <td><code>rrhh:politicas_empresa</code></td>
+                                        <td>RRHH</td>
+                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=rrhh:politicas_empresa" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none;">Abrir en DokuWiki</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Doc. Técnica y Proyectos</td>
+                                        <td><code>ingenieria:doc_tecnica_proyectos</code></td>
                                         <td>Engineering</td>
-                                        <td><span class="wiki-badge wiki-badge-con">Revisión</span></td>
+                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=ingenieria:doc_tecnica_proyectos" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none;">Abrir en DokuWiki</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Características Clave</td>
+                                        <td><code>ingenieria:caracteristicas_clave</code></td>
+                                        <td>Product & Ops</td>
+                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=ingenieria:caracteristicas_clave" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none;">Abrir en DokuWiki</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Recursos de Software</td>
+                                        <td><code>it:recursos_software</code></td>
+                                        <td>IT / Engineering</td>
+                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=it:recursos_software" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none;">Abrir en DokuWiki</a></td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        </div>
+
+                        <div style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+                            <a href="http://100.100.195.39/dokuwiki/doku.php?id=it:recursos_software" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Leer / Editar documento oficial en DokuWiki
+                            </a>
                         </div>
                     </div>
 
