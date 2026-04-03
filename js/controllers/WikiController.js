@@ -431,14 +431,7 @@ export class WikiController {
                             </div>
                         </div>
 
-                        <div id="cta-tab-1" style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
-                            <a href="http://100.100.195.39/dokuwiki/doku.php?id=rrhh:manual_bienvenida" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                Leer / Editar documento oficial en DokuWiki
-                            </a>
-                        </div>
+                        <!-- CTA inyectado dinámicamente por JS en render -->
                     </div>
 
                     <!-- TAB 2: Políticas -->
@@ -497,14 +490,7 @@ export class WikiController {
                             </div>
                         </div>
 
-                        <div id="cta-tab-2" style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
-                            <a href="http://100.100.195.39/dokuwiki/doku.php?id=rrhh:politicas_empresa" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                Leer / Editar documento oficial en DokuWiki
-                            </a>
-                        </div>
+                        <!-- CTA inyectado dinámicamente por JS en render -->
                     </div>
 
                     <!-- TAB 3: Doc Técnica -->
@@ -566,14 +552,7 @@ export class WikiController {
                             </div>
                         </div>
 
-                        <div id="cta-tab-3" style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
-                            <a href="http://100.100.195.39/dokuwiki/doku.php?id=ingenieria:doc_tecnica_proyectos" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                Leer / Editar documento oficial en DokuWiki
-                            </a>
-                        </div>
+                        <!-- CTA inyectado dinámicamente por JS en render -->
                     </div>
 
                     <!-- TAB 4: Dashboard Wiki -->
@@ -635,14 +614,7 @@ const wikiConfig = {
                             </div>
                         </div>
 
-                        <div id="cta-tab-4" style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
-                            <a href="http://100.100.195.39/dokuwiki/doku.php?id=ingenieria:caracteristicas_clave" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                Leer / Editar documento oficial en DokuWiki
-                            </a>
-                        </div>
+                        <!-- CTA inyectado dinámicamente por JS en render -->
                     </div>
 
                     <!-- TAB 5: Software -->
@@ -741,8 +713,8 @@ const wikiConfig = {
                         </div>
                         <button id="btn-copy-quill" class="wiki-btn-primary" style="margin-bottom: 3rem;">Copiar al portapapeles</button>
 
-                        <h3 class="wiki-h3">Índice de Acceso Rápido</h3>
-                        <div class="wiki-subtitle" style="font-size: 0.95rem; color: #475569; margin-bottom: 1.5rem;">Busca y accede directamente a las secciones de nuestra Wiki oficial alojada en el servidor.</div>
+                        <h3 class="wiki-h3">Índice de Acceso Rápido a la Wiki</h3>
+                        <div class="wiki-subtitle" style="font-size: 0.95rem; color: #475569; margin-bottom: 1.5rem;">Busca y accede directamente a las secciones de nuestra Wiki oficial alojada en el servidor (100.100.195.39).</div>
                         <div style="background: white; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0;">
                             <table id="tabla-documentos" class="display" style="width:100%; text-align: left;">
                                 <thead>
@@ -789,14 +761,7 @@ const wikiConfig = {
                         </div>
                         </div>
 
-                        <div style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
-                            <a href="http://100.100.195.39/dokuwiki/doku.php?id=it:recursos_software" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                Leer / Editar documento oficial en DokuWiki
-                            </a>
-                        </div>
+                        <!-- CTA inyectado dinámicamente por JS en render -->
                     </div>
 
                 </div>
@@ -854,6 +819,39 @@ const wikiConfig = {
             });
         });
 
+        // INYECCIÓN DINÁMICA DE BOTONES PARA EVITAR DUPLICADOS
+        const tabsLinks = [
+            { id: '#wiki-tab-1', url: 'rrhh:manual_bienvenida' },
+            { id: '#wiki-tab-2', url: 'rrhh:politicas_empresa' },
+            { id: '#wiki-tab-3', url: 'ingenieria:doc_tecnica_proyectos' },
+            { id: '#wiki-tab-4', url: 'ingenieria:caracteristicas_clave' }
+        ];
+
+        tabsLinks.forEach(linkObj => {
+            const tabSection = container.querySelector(linkObj.id);
+            if (tabSection) {
+                // Prevenir duplicados (RADICAL CLEANUP)
+                const existingBtn = tabSection.querySelector('.wiki-dynamic-cta-container');
+                if (existingBtn) {
+                    existingBtn.remove();
+                }
+
+                // Generar desde template
+                const btnContainer = document.createElement('div');
+                btnContainer.className = 'wiki-dynamic-cta-container';
+                btnContainer.style.cssText = 'margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;';
+                btnContainer.innerHTML = `
+                    <a href="http://100.100.195.39/dokuwiki/doku.php?id=${linkObj.url}" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        Leer / Editar documento oficial en DokuWiki
+                    </a>
+                `;
+                tabSection.appendChild(btnContainer);
+            }
+        });
+
         // --- ACTIVACIÓN DE PLUGINS DE TERCEROS ---
         setTimeout(() => {
             // 1. Activar Quill.js (Editor)
@@ -867,15 +865,46 @@ const wikiConfig = {
                 if (btnCopy) {
                     btnCopy.addEventListener('click', () => {
                         const text = quillInstance.getText();
-                        navigator.clipboard.writeText(text).then(() => {
-                            const originalText = btnCopy.textContent;
-                            btnCopy.textContent = '¡Copiado!';
-                            setTimeout(() => {
-                                btnCopy.textContent = originalText;
-                            }, 2000);
-                        }).catch(err => {
-                            console.error('Error al copiar content del editor: ', err);
-                        });
+
+                        // Fallback implementation to handle cases where navigator.clipboard is unavailable
+                        // (often happens in local dev environments avoiding https://)
+                        const copyFallback = (textToCopy) => {
+                            const textArea = document.createElement("textarea");
+                            textArea.value = textToCopy;
+                            // Move outside the screen to make it invisible
+                            textArea.style.position = "absolute";
+                            textArea.style.left = "-999999px";
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            try {
+                                document.execCommand('copy');
+                                const originalText = btnCopy.textContent;
+                                btnCopy.textContent = '¡Copiado!';
+                                setTimeout(() => {
+                                    btnCopy.textContent = originalText;
+                                }, 2000);
+                            } catch (error) {
+                                console.error("Error fallback clipboard: ", error);
+                            } finally {
+                                textArea.remove();
+                            }
+                        };
+
+                        if (navigator.clipboard && window.isSecureContext) {
+                            navigator.clipboard.writeText(text).then(() => {
+                                const originalText = btnCopy.textContent;
+                                btnCopy.textContent = '¡Copiado!';
+                                setTimeout(() => {
+                                    btnCopy.textContent = originalText;
+                                }, 2000);
+                            }).catch(err => {
+                                console.error('Error al usar clipboard API. Usando fallback', err);
+                                copyFallback(text);
+                            });
+                        } else {
+                            // Usar execCommand block como Fallback.
+                            copyFallback(text);
+                        }
                     });
                 }
             }
