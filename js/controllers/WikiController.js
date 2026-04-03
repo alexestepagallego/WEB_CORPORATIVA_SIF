@@ -739,7 +739,7 @@ const wikiConfig = {
                         <div id="editor-wiki" style="height: 250px; background: white; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
                             <p>Escribe el contenido técnico aquí (usa tipografía Arial)...</p>
                         </div>
-                        <button class="wiki-btn-primary" style="margin-bottom: 3rem;">Copiar al portapapeles</button>
+                        <button id="btn-copy-quill" class="wiki-btn-primary" style="margin-bottom: 3rem;">Copiar al portapapeles</button>
 
                         <h3 class="wiki-h3">Directorio de Documentos Oficiales</h3>
                         <div style="background: white; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0;">
@@ -857,10 +857,26 @@ const wikiConfig = {
         setTimeout(() => {
             // 1. Activar Quill.js (Editor)
             if (container.querySelector('#editor-wiki')) {
-                new Quill('#editor-wiki', {
+                const quillInstance = new Quill('#editor-wiki', {
                     theme: 'snow',
                     placeholder: 'Escribe el contenido técnico aquí...'
                 });
+
+                const btnCopy = container.querySelector('#btn-copy-quill');
+                if (btnCopy) {
+                    btnCopy.addEventListener('click', () => {
+                        const text = quillInstance.getText();
+                        navigator.clipboard.writeText(text).then(() => {
+                            const originalText = btnCopy.textContent;
+                            btnCopy.textContent = '¡Copiado!';
+                            setTimeout(() => {
+                                btnCopy.textContent = originalText;
+                            }, 2000);
+                        }).catch(err => {
+                            console.error('Error al copiar content del editor: ', err);
+                        });
+                    });
+                }
             }
 
             // 2. Activar DataTables (Tablas Inteligentes)
@@ -875,7 +891,8 @@ const wikiConfig = {
                         "language": {
                             "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
                         },
-                        "pageLength": 5
+                        "pageLength": 5,
+                        "order": []
                     });
                 }
                 // Activar los colores del código (Prism.js)
