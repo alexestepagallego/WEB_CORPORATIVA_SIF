@@ -824,7 +824,8 @@ const wikiConfig = {
             { id: '#wiki-tab-1', url: 'rrhh:manual_bienvenida' },
             { id: '#wiki-tab-2', url: 'rrhh:politicas_empresa' },
             { id: '#wiki-tab-3', url: 'ingenieria:doc_tecnica_proyectos' },
-            { id: '#wiki-tab-4', url: 'ingenieria:caracteristicas_clave' }
+            { id: '#wiki-tab-4', url: 'ingenieria:caracteristicas_clave' },
+            { id: '#wiki-tab-5', url: 'it:recursos_software' }
         ];
 
         tabsLinks.forEach(linkObj => {
