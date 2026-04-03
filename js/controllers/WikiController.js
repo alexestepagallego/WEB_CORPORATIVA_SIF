@@ -431,7 +431,7 @@ export class WikiController {
                             </div>
                         </div>
 
-                        <div style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+                        <div id="cta-tab-1" style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
                             <a href="http://100.100.195.39/dokuwiki/doku.php?id=rrhh:manual_bienvenida" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
                                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
@@ -497,7 +497,7 @@ export class WikiController {
                             </div>
                         </div>
 
-                        <div style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+                        <div id="cta-tab-2" style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
                             <a href="http://100.100.195.39/dokuwiki/doku.php?id=rrhh:politicas_empresa" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
                                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
@@ -566,7 +566,7 @@ export class WikiController {
                             </div>
                         </div>
 
-                        <div style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+                        <div id="cta-tab-3" style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
                             <a href="http://100.100.195.39/dokuwiki/doku.php?id=ingenieria:doc_tecnica_proyectos" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
                                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
@@ -635,7 +635,7 @@ const wikiConfig = {
                             </div>
                         </div>
 
-                        <div style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+                        <div id="cta-tab-4" style="margin-top: 3rem; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
                             <a href="http://100.100.195.39/dokuwiki/doku.php?id=ingenieria:caracteristicas_clave" target="_blank" class="wiki-btn-primary" style="background-color: #0f172a; padding: 1rem 2rem; font-size: 1.05rem;">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem; vertical-align: middle;">
                                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
@@ -741,7 +741,8 @@ const wikiConfig = {
                         </div>
                         <button id="btn-copy-quill" class="wiki-btn-primary" style="margin-bottom: 3rem;">Copiar al portapapeles</button>
 
-                        <h3 class="wiki-h3">Directorio de Documentos Oficiales</h3>
+                        <h3 class="wiki-h3">Índice de Acceso Rápido</h3>
+                        <div class="wiki-subtitle" style="font-size: 0.95rem; color: #475569; margin-bottom: 1.5rem;">Busca y accede directamente a las secciones de nuestra Wiki oficial alojada en el servidor.</div>
                         <div style="background: white; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0;">
                             <table id="tabla-documentos" class="display" style="width:100%; text-align: left;">
                                 <thead>
@@ -757,31 +758,31 @@ const wikiConfig = {
                                         <td>Manual de Bienvenida</td>
                                         <td><code>rrhh:manual_bienvenida</code></td>
                                         <td>RRHH / Operations</td>
-                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=rrhh:manual_bienvenida" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none;">Abrir en DokuWiki</a></td>
+                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=rrhh:manual_bienvenida" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Ver en DokuWiki <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></td>
                                     </tr>
                                     <tr>
                                         <td>Políticas Corporativas</td>
                                         <td><code>rrhh:politicas_empresa</code></td>
                                         <td>RRHH</td>
-                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=rrhh:politicas_empresa" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none;">Abrir en DokuWiki</a></td>
+                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=rrhh:politicas_empresa" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Ver en DokuWiki <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></td>
                                     </tr>
                                     <tr>
                                         <td>Doc. Técnica y Proyectos</td>
                                         <td><code>ingenieria:doc_tecnica_proyectos</code></td>
                                         <td>Engineering</td>
-                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=ingenieria:doc_tecnica_proyectos" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none;">Abrir en DokuWiki</a></td>
+                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=ingenieria:doc_tecnica_proyectos" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Ver en DokuWiki <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></td>
                                     </tr>
                                     <tr>
                                         <td>Características Clave</td>
                                         <td><code>ingenieria:caracteristicas_clave</code></td>
                                         <td>Product & Ops</td>
-                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=ingenieria:caracteristicas_clave" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none;">Abrir en DokuWiki</a></td>
+                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=ingenieria:caracteristicas_clave" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Ver en DokuWiki <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></td>
                                     </tr>
                                     <tr>
                                         <td>Recursos de Software</td>
                                         <td><code>it:recursos_software</code></td>
                                         <td>IT / Engineering</td>
-                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=it:recursos_software" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none;">Abrir en DokuWiki</a></td>
+                                        <td><a href="http://100.100.195.39/dokuwiki/doku.php?id=it:recursos_software" target="_blank" class="wiki-badge wiki-badge-pro" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Ver en DokuWiki <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></td>
                                     </tr>
                                 </tbody>
                             </table>
