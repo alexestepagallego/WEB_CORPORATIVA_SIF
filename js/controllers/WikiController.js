@@ -263,7 +263,7 @@ export class WikiController {
 
                 </div>
             </div>
-        \`;
+        `;
 
         this.attachEvents(container);
     }
