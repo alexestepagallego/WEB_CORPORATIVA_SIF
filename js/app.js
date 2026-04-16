@@ -78,6 +78,30 @@ class App {
         } else if (view === 'trello-board') {
             pageTitle.textContent = 'Gestión de Tareas';
             if (headerActions) headerActions.innerHTML = '';
+        } else if (view === 'odoo-erp') {
+            pageTitle.textContent = 'Portal del Empleado (ERP)';
+            if (headerActions) headerActions.innerHTML = '';
+            
+            contentArea.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-align: center; padding: 2rem;">
+                    
+                    <div style="background-color: #714B67; padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem;">
+                        <svg viewBox="0 0 24 24" style="width: 60px; height: 60px; color: white;" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 8v8"></path>
+                            <path d="M8 12h8"></path>
+                        </svg>
+                    </div>
+                    
+                    <h2 style="color: #1e293b; font-size: 1.8rem; margin-bottom: 0.5rem; font-family: 'Inter', sans-serif;">Odoo ERP - Clear Code</h2>
+                    <p style="color: #64748b; max-width: 550px; margin-bottom: 2.5rem; line-height: 1.6;">Bienvenido al portal central de gestión. Desde aquí puedes acceder a tus nóminas, solicitar vacaciones, registrar tu jornada y gestionar los recursos del departamento. El acceso está protegido y centralizado en nuestro servidor.</p>
+                    
+                    <a href="http://100.100.195.39:8069" target="_blank" style="background-color: #714B67; color: white; padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        Acceder al ERP
+                    </a>
+                </div>
+            `;
+        }
             
             contentArea.innerHTML = `
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-align: center; padding: 2rem;">
@@ -96,7 +120,7 @@ class App {
 
             
         }
-    }
+    
 
 
 const app = new App();
