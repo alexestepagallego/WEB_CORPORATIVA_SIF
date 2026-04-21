@@ -115,6 +115,75 @@ class App {
                     </a>
                 </div>
             `;
+        } else if (view === 'ai-appointment') {
+            pageTitle.textContent = 'Asistente IA - Agendar Cita';
+            if (headerActions) headerActions.innerHTML = '';
+            
+            contentArea.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-align: center; padding: 2rem;">
+                    
+                    <div style="background-color: #10b981; padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem;">
+                        <svg viewBox="0 0 24 24" style="width: 60px; height: 60px; color: white;" fill="none" stroke="currentColor" stroke-width="2">
+                           <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"></path>
+                        </svg>
+                    </div>
+                    
+                    <h2 style="color: #1e293b; font-size: 1.8rem; margin-bottom: 0.5rem; font-family: 'Inter', sans-serif;">Agenda una cita con nuestra IA</h2>
+                    <p style="color: #64748b; max-width: 550px; margin-bottom: 2rem; line-height: 1.6;">Dile a nuestro asistente Llama 3 qué necesitas y cuándo te viene bien. Él se encargará de organizar tu calendario automáticamente.</p>
+                    
+                    <textarea id="textoCita" placeholder="Ej: Necesito una reunión técnica el jueves a las 11:00..." style="width: 100%; max-width: 500px; height: 120px; padding: 1rem; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 1rem; font-family: inherit; resize: vertical;"></textarea>
+                    
+                    <button onclick="app.enviarCitaIA()" style="background-color: #10b981; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        Solicitar Cita a n8n
+                    </button>
+                    
+                    <p id="mensajeRespuesta" style="margin-top: 1rem; font-weight: 600; color: #10b981;"></p>
+                </div>
+            `;
+        }
+        
+    }
+    async enviarCitaIA() {
+        const texto = document.getElementById('textoCita').value;
+        const btn = document.querySelector('button[onclick="app.enviarCitaIA()"]');
+        const mensaje = document.getElementById('mensajeRespuesta');
+        
+        if (!texto.trim()) {
+            mensaje.style.color = 'red';
+            mensaje.innerText = "Por favor, escribe algo primero.";
+            return;
+        }
+
+        // Cambiamos el botón para que parezca que está pensando
+        btn.innerText = "Enviando a la IA...";
+        btn.style.opacity = "0.7";
+        mensaje.innerText = "";
+
+        // ¡IMPORTANTE! Aquí tienes que pegar la URL que te dé el Webhook de tu n8n
+        const urlWebhook = "AQUÍ_IRÁ_LA_URL_DE_TU_N8N"; 
+
+        try {
+            const respuesta = await fetch(urlWebhook, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ peticion: texto })
+            });
+
+            if (respuesta.ok) {
+                mensaje.style.color = '#10b981'; // Verde de éxito
+                mensaje.innerText = "¡Cita procesada por Llama 3 y registrada en el calendario!";
+                document.getElementById('textoCita').value = ""; // Limpiamos la caja
+            } else {
+                throw new Error("Error en la respuesta del servidor");
+            }
+        } catch (error) {
+            console.error("Error al conectar con n8n:", error);
+            mensaje.style.color = 'red';
+            mensaje.innerText = "Hubo un error de conexión con n8n.";
+        } finally {
+            // Devolvemos el botón a la normalidad
+            btn.innerText = "Solicitar Cita a n8n";
+            btn.style.opacity = "1";
         }
     }
 }
