@@ -160,7 +160,7 @@ class App {
         mensaje.innerText = "";
 
         // ¡IMPORTANTE! Aquí tienes que pegar la URL que te dé el Webhook de tu n8n
-        const urlWebhook = "AQUÍ_IRÁ_LA_URL_DE_TU_N8N"; 
+        const urlWebhook = "https://brookless-honorifically-sharyn.ngrok-free.dev/webhook-test/d03b3208-d945-4940-be85-a71c2ded3dc9" 
 
         try {
             const respuesta = await fetch(urlWebhook, {
