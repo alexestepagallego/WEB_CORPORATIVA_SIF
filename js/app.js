@@ -161,8 +161,8 @@ class App {
 
         // ¡IMPORTANTE! Aquí tienes que pegar la URL que te dé el Webhook de tu n8n
         // Combinamos la IP del Samsung + el puerto + el Path de tu captura
-const urlWebhook = "http://10.0.0.5:5678/webhook/d03b3208-d945-4940-be85-a71c2ded3dc9";
-
+        const urlWebhook = "http://10.0.0.5:5678/webhook/d03b3208-d945-4940-be85-a71c2ded3dc9";
+        
         try {
             const respuesta = await fetch(urlWebhook, {
                 method: 'POST',
